@@ -991,20 +991,23 @@ function fvRenewWithTax(P, annualPct, totalDays, renewEveryDays, taxPct){
 }
 
 function suggestTaxPct(prod, targetCcy, days){
-  // TERM (Vadeli Mevduat): stopaj uygulanır
-  if(prod==='TERM'){
-    if(targetCcy!=='TL') return 25;   // dövizli vadeli
-    if(days<=183) return 17.5;        // TL ≤183 gün
-    if(days<=365) return 15;          // TL ≤365 gün
-    return 10;                         // TL >365 gün
+  // TL Vadeli Mevduat
+  if(prod==='TERM' && targetCcy==='TL'){
+    if(days<=183) return 17.5;
+    if(days<=365) return 15;
+    return 10;
   }
-  // SUKUK: Hazine sukuku stopaj var ama banka sukukları farklı → 0 varsayım
-  if(prod==='SUKUK') return 0;
-  // FUND (Yatırım Fonu): stopaj yok, fon bünyesinde vergi
-  if(prod==='FUND') return 0;
-  // DPM (Ayrılmış Portföy): stopaj yok
-  if(prod==='DPM') return 0;
-  // Diğer: 0
+  // Dövizli Vadeli Mevduat (USD/EUR)
+  if(prod==='TERM' && targetCcy!=='TL'){
+    return 25;
+  }
+  // Yatırım Fonu — tüm vadelerde %17.5 (2024 itibari ile)
+  if(prod==='FUND') return 17.5;
+  // Altın — %15
+  if(prod==='TERM' && targetCcy==='XAUg') return 15;
+  // Sukuk & DPM — karışık, manuel sorulsun; default başlangıç değeri
+  if(prod==='SUKUK') return 0;  // kullanıcı manuel girecek
+  if(prod==='DPM')   return 0;  // kullanıcı manuel girecek
   return 0;
 }
 
@@ -1303,7 +1306,7 @@ const SMART_SCENARIOS = {
         { icon:'🔄', text: L()==='en' ? `Sukuk layer provides fixed income floor` : `Sukuk katmanı sabit gelir tabanı sağlar` },
         { icon:'📊', text: L()==='en' ? `30/35/20/15 split → optimal Sharpe for mixed mandates` : `30/35/20/15 dağılımı → karma mandatlar için optimal Sharpe` }
       ],
-      weights: [{w:.35,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true},{w:.25,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0}]
+      weights: [{w:.35,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.25,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true},{w:.25,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0}]
     }),
     protection: (ctx) => ({
       name: L()==='en' ? 'Capital Protection' : 'Sermaye Koruma',
@@ -1344,7 +1347,7 @@ const SMART_SCENARIOS = {
           { icon:'🛡️', text: L()==='en' ? `USD DPM 15% tail hedge: if TL carry reverses sharply` : `USD DPM %15 kuyruk koruması: TL carry hızla bozulursa` },
           { icon:'⚠️', text: L()==='en' ? `Key risk: USD/TRY > ${(ctx.usdtry*(1+ctx.carryVsUSD/100)).toFixed(2)} at maturity would negate carry` : `Ana risk: vade sonunda USD/TRY > ${ctx.usdtry>0?(ctx.usdtry*(1+ctx.carryVsUSD/100)).toFixed(2):'spot×(1+carry)'} carry'yi sıfırlar` }
         ],
-        weights: [{w:.50,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.10,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true},{w:.15,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0}]
+        weights: [{w:.50,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.10,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true},{w:.15,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0}]
       };
     },
     fxhedge: (ctx) => ({
@@ -1364,7 +1367,7 @@ const SMART_SCENARIOS = {
         { icon:'🇹🇷', text: L()==='en' ? `TL Sukuk (${ctx.rTL-7}%) — yield enhancer, sharia-compliant` : `TL Sukuk (%${ctx.rTL-7}) — getiri artırıcı, şeriat uyumlu` },
         { icon:'📈', text: L()==='en' ? `TL Fund tranche captures upside if carry holds` : `TL Fon dilimi carry devam ederse yükselme potansiyeli` }
       ],
-      weights: [{w:.35,ccy:'USD',prod:'SUKUK',rate:ctx.rUSD+2,method:'SIMPLE',taxAuto:false,tax:0},{w:.30,ccy:'EUR',prod:'SUKUK',rate:ctx.rEUR+3,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0}]
+      weights: [{w:.35,ccy:'USD',prod:'SUKUK',rate:ctx.rUSD+2,method:'SIMPLE',taxAuto:false,tax:0},{w:.30,ccy:'EUR',prod:'SUKUK',rate:ctx.rEUR+3,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true}]
     }),
     dpm: (ctx) => ({
       name: L()==='en' ? 'DPM Premium' : 'DPM Premium',
@@ -1383,7 +1386,7 @@ const SMART_SCENARIOS = {
         { icon:'📜', text: L()==='en' ? `TL Sukuk 15%: fixed income base, insulates against equity swings` : `TL Sukuk %15: sabit getiri tabanı, hisse senedi dalgalanmalarına karşı koruma` },
         { icon:'🏦', text: L()==='en' ? `TL Term 10%: liquidity buffer, short-tenor rollover` : `TL Vadeli %10: likidite tamponu, kısa vadeli yenileme` }
       ],
-      weights: [{w:.55,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.10,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true}]
+      weights: [{w:.55,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.15,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.10,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true}]
     })
   },
 
@@ -1406,7 +1409,7 @@ const SMART_SCENARIOS = {
         { icon:'📜', text: `TL Sukuk %25: ${ctx.rTL-7}% sabit, stopajsız` },
         { icon:'💵', text: `USD Sukuk %15: TL'ye karşı değer koruması` }
       ],
-      weights: [{w:.35,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'USD',prod:'SUKUK',rate:ctx.rUSD+2,method:'SIMPLE',taxAuto:false,tax:0}]
+      weights: [{w:.35,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.25,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'USD',prod:'SUKUK',rate:ctx.rUSD+2,method:'SIMPLE',taxAuto:false,tax:0}]
     }),
     protection: (ctx) => ({
       name: L()==='en' ? 'FX Protection' : 'FX Koruması',
@@ -1444,7 +1447,7 @@ const SMART_SCENARIOS = {
         { icon:'🏦', text: `TL Vadeli %20: ${Math.max(ctx.rTL-10,25)}% sabit faiz, en güvenli TL ürünü` },
         { icon:'⚠️', text: `Uyarı: FX hedge yok — TL riski maksimum` }
       ],
-      weights: [{w:.55,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true}]
+      weights: [{w:.55,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true}]
     }),
     fxhedge: (ctx) => ({
       name: L()==='en' ? 'FX Hedge' : 'FX Hedge',
@@ -1463,7 +1466,7 @@ const SMART_SCENARIOS = {
         { icon:'🇪🇺', text: `EUR Sukuk %20: FX çeşitlendirmesi` },
         { icon:'📜', text: `TL Sukuk %20: sabit gelir tamponu` }
       ],
-      weights: [{w:.30,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.30,ccy:'USD',prod:'SUKUK',rate:ctx.rUSD+2,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'EUR',prod:'SUKUK',rate:ctx.rEUR+3,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0}]
+      weights: [{w:.30,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.30,ccy:'USD',prod:'SUKUK',rate:ctx.rUSD+2,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'EUR',prod:'SUKUK',rate:ctx.rEUR+3,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0}]
     }),
     dpm: (ctx) => ({
       name: L()==='en' ? 'TL-Centric DPM' : 'TL Odaklı DPM',
@@ -1482,7 +1485,7 @@ const SMART_SCENARIOS = {
         { icon:'📜', text: `TL Sukuk %25: sabit gelir tabanı` },
         { icon:'🏦', text: `TL Vadeli %20: kısa vadeli likidite çıpası` }
       ],
-      weights: [{w:.30,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true}]
+      weights: [{w:.30,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.25,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true}]
     })
   },
 
@@ -1501,7 +1504,7 @@ const SMART_SCENARIOS = {
         {icon:'📜', text:`TL Sukuk %20: sabit gelir`},
         {icon:'💵', text:`USD DPM %15: çapraz diversifikasyon`}
       ],
-      weights: [{w:.35,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.30,ccy:'EUR',prod:'SUKUK',rate:ctx.rEUR+3,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0}]
+      weights: [{w:.35,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.30,ccy:'EUR',prod:'SUKUK',rate:ctx.rEUR+3,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0}]
     }),
     protection: (ctx) => ({
       name: L()==='en'?'EUR Capital Protection':'EUR Sermaye Koruma',
@@ -1517,7 +1520,7 @@ const SMART_SCENARIOS = {
       riskPct:72, riskLabel:L()==='en'?'High':'Yüksek',
       insight: L()==='en'?`Maximum TL allocation to capture the EUR carry spread of ${ctx.carryVsEUR.toFixed(0)}pp.`:`EUR carry spreadini ${ctx.carryVsEUR.toFixed(0)}pp yakalamak için maksimum TL alokasyonu.`,
       rationale:[{icon:'📈',text:`TL Fon %55: ${ctx.rTL}% carry`},{icon:'📜',text:`TL Sukuk %25`},{icon:'🛡️',text:`EUR DPM %20: kuyruk koruması`}],
-      weights:[{w:.55,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'EUR',prod:'DPM',rate:ctx.rEUR+8,method:'SIMPLE',taxAuto:false,tax:0}]
+      weights:[{w:.55,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'EUR',prod:'DPM',rate:ctx.rEUR+8,method:'SIMPLE',taxAuto:false,tax:0}]
     }),
     fxhedge: (ctx) => ({
       name:L()==='en'?'FX Hedge (EUR)':'FX Hedge (EUR)',
@@ -1525,7 +1528,7 @@ const SMART_SCENARIOS = {
       riskPct:38, riskLabel:L()==='en'?'Low–Moderate':'Düşük–Orta',
       insight:L()==='en'?`3-currency barbell: EUR base, USD diversification, TL yield.`:`3 döviz barbell: EUR baz, USD diversifikasyon, TL getiri.`,
       rationale:[{icon:'🇪🇺',text:`EUR Sukuk %35`},{icon:'💵',text:`USD Sukuk %30`},{icon:'📈',text:`TL Fon %20`},{icon:'📜',text:`TL Sukuk %15`}],
-      weights:[{w:.35,ccy:'EUR',prod:'SUKUK',rate:ctx.rEUR+3,method:'SIMPLE',taxAuto:false,tax:0},{w:.30,ccy:'USD',prod:'SUKUK',rate:ctx.rUSD+2,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0}]
+      weights:[{w:.35,ccy:'EUR',prod:'SUKUK',rate:ctx.rEUR+3,method:'SIMPLE',taxAuto:false,tax:0},{w:.30,ccy:'USD',prod:'SUKUK',rate:ctx.rUSD+2,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.15,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0}]
     }),
     dpm: (ctx) => ({
       name:'EUR DPM Premium', icon:'👔',
@@ -1545,7 +1548,7 @@ const SMART_SCENARIOS = {
       riskPct:50, riskLabel:L()==='en'?'Moderate':'Orta',
       insight:L()==='en'?`<strong>Gold principal</strong> is unique: gold itself earns no yield. Converting partially to TL/USD products generates income while maintaining some gold exposure as inflation hedge.`:`<strong>Altın giriş</strong> benzersizdir: altının kendisi getiri sağlamaz. Kısmen TL/USD ürünlerine dönüştürmek, enflasyon hedge olarak altın maruziyetini korurken gelir üretir.`,
       rationale:[{icon:'🥇',text:'Altın %30 spot tutar — enflasyon sigortası'},{icon:'📈',text:`TL Fon %35: ${ctx.rTL}%`},{icon:'💵',text:'USD DPM %20'},{icon:'📜',text:'TL Sukuk %15'}],
-      weights:[{w:.35,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true}]
+      weights:[{w:.35,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.25,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.25,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true}]
     }),
     protection: (ctx) => ({
       name:L()==='en'?'Gold Preservation':'Altın Koruması',
@@ -1569,7 +1572,7 @@ const SMART_SCENARIOS = {
       riskPct:42, riskLabel:L()==='en'?'Moderate':'Orta',
       insight:L()==='en'?`Multi-currency approach for gold clients: spread across USD, EUR and TL to minimize single-currency risk.`:`Altın müşterisi için çok para birimli yaklaşım: tek para birimi riskini minimize etmek için USD, EUR ve TL'ye dağıt.`,
       rationale:[{icon:'💵',text:'USD Sukuk %35'},{icon:'🇪🇺',text:'EUR Sukuk %30'},{icon:'📈',text:`TL Fon %20`},{icon:'📜',text:'TL Sukuk %15'}],
-      weights:[{w:.35,ccy:'USD',prod:'SUKUK',rate:ctx.rUSD+2,method:'SIMPLE',taxAuto:false,tax:0},{w:.30,ccy:'EUR',prod:'SUKUK',rate:ctx.rEUR+3,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0}]
+      weights:[{w:.35,ccy:'USD',prod:'SUKUK',rate:ctx.rUSD+2,method:'SIMPLE',taxAuto:false,tax:0},{w:.30,ccy:'EUR',prod:'SUKUK',rate:ctx.rEUR+3,method:'SIMPLE',taxAuto:false,tax:0},{w:.20,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.15,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0}]
     }),
     dpm: (ctx) => ({
       name:'Gold DPM Premium', icon:'👔',
@@ -1577,7 +1580,7 @@ const SMART_SCENARIOS = {
       riskPct:58, riskLabel:L()==='en'?'Moderate–High':'Orta–Yüksek',
       insight:L()==='en'?`DPM mandate with gold as the base: manager converts strategically to yield products based on gold/FX outlook.`:`Altın bazlı DPM yetkisi: yönetici altın/FX görünümüne göre stratejik olarak getirili ürünlere dönüştürür.`,
       rationale:[{icon:'🎯',text:'USD DPM %45: yönetici altın/FX arbitrajı yapabilir'},{icon:'📈',text:`TL Fon %30: ${ctx.rTL}%`},{icon:'📜',text:'TL Sukuk %15'},{icon:'🏦',text:'TL Vadeli %10'}],
-      weights:[{w:.45,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0},{w:.30,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:false,tax:0},{w:.15,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.10,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true}]
+      weights:[{w:.45,ccy:'USD',prod:'DPM',rate:12,method:'SIMPLE',taxAuto:false,tax:0},{w:.30,ccy:'TL',prod:'FUND',rate:ctx.rTL,method:'SIMPLE',taxAuto:true},{w:.15,ccy:'TL',prod:'SUKUK',rate:ctx.rTL-7,method:'SIMPLE',taxAuto:false,tax:0},{w:.10,ccy:'TL',prod:'TERM',rate:Math.max(ctx.rTL-10,25),method:'SIMPLE',taxAuto:true}]
     })
   }
 };
@@ -1755,6 +1758,17 @@ function calc(){
     const taxAuto=!!document.getElementById('taxAuto_'+id)?.checked;
     let taxPct=Number(document.getElementById('tax_'+id).value)||0;
     if(taxAuto){ taxPct=suggestTaxPct(prod,targetCcy,days); document.getElementById('tax_'+id).value=taxPct; }
+    // SUKUK/DPM: remind user to check tax rate manually
+    if(!taxAuto && (prod==='SUKUK'||prod==='DPM')){
+      const taxEl2=document.getElementById('tax_'+id);
+      if(taxEl2 && (Number(taxEl2.value)||0)===0){
+        taxEl2.style.borderColor='var(--gold-400)';
+        taxEl2.title='SUKUK/DPM stopajı kuruma göre değişir. Lütfen kontrol edin.';
+      }
+    } else {
+      const taxEl2=document.getElementById('tax_'+id);
+      if(taxEl2){ taxEl2.style.borderColor=''; taxEl2.title=''; }
+    }
 
     usedPrincipal+=amtBase;
     const r1=fxRate(principalCcy,targetCcy,'start');
@@ -2840,26 +2854,50 @@ function renderAnalyticsResults(results){
 function suggestBestScenario(){
   updateScenarioInsightBar();
 
-  let best = 'balanced';
   const ctx = getMarketContext();
+  let best = 'balanced';
 
-  // Master signal drives decision if available
-  if(ANALYTICS.masterSignal){
-    if(ANALYTICS.masterSignal === 'positive') best = 'growth';
-    else if(ANALYTICS.masterSignal === 'danger') best = ctx.principalCcy === 'USD' ? 'protection' : 'fxhedge';
-    else if(ANALYTICS.masterSignal === 'warning') best = 'fxhedge';
-    else best = 'balanced';
-  } else if(MACRO_STATE.signal){
-    if(MACRO_STATE.signal === 'TL_STRONG') best = 'growth';
-    else if(MACRO_STATE.signal === 'TL_WEAK') best = ctx.principalCcy === 'USD' ? 'protection' : 'fxhedge';
-    else best = 'balanced';
-  } else {
-    if(ctx.principalCcy === 'USD'){
-      if(ctx.carryAttractive) best = 'growth';
-      else if(ctx.carryNegative) best = 'protection';
-    } else if(ctx.principalCcy === 'TL'){
+  // NET CARRY (FX sonrası) her zaman birincil karar kriteri
+  // Analytics/Macro sinyal ikincil — sadece net carry sınır bölgesindeyse devreye girer
+  const netCarry = ctx.netCarryTL_vsUSD;
+  const grossCarry = ctx.carryVsUSD;
+
+  if(ctx.principalCcy === 'USD'){
+    if(netCarry > 15){
+      // Net carry çok güçlü → carry trade kesin mantıklı
       best = 'growth';
+    } else if(netCarry > 5){
+      // Net carry pozitif ama orta → analytics sinyali tie-breaker
+      if(ANALYTICS.masterSignal === 'positive' || MACRO_STATE.signal === 'TL_STRONG') best = 'growth';
+      else best = 'balanced';
+    } else if(netCarry > 0){
+      // Net carry pozitif ama zayıf → dengeli
+      best = 'balanced';
+    } else if(netCarry > -10){
+      // Net carry hafif negatif → FX hedge
+      best = 'fxhedge';
+    } else {
+      // Net carry ciddi negatif → koruma
+      best = 'protection';
     }
+  } else if(ctx.principalCcy === 'TL'){
+    // TL müşteri: FX beklentisi var mı?
+    const fxRisk = ctx.fxMoveUSD; // beklenen USD/TRY yıllık artış %
+    if(fxRisk > grossCarry * 0.8){
+      best = 'protection'; // TL hızla değer kaybedebilir
+    } else if(fxRisk > grossCarry * 0.5){
+      best = 'balanced';
+    } else {
+      best = 'growth'; // TL'de kal, tam getiri
+    }
+  } else if(ctx.principalCcy === 'EUR'){
+    const netCarryEUR = ctx.netCarryTL_vsEUR;
+    if(netCarryEUR > 10) best = 'growth';
+    else if(netCarryEUR > 0) best = 'balanced';
+    else best = 'fxhedge';
+  } else {
+    // Altın — varsayılan dengeli
+    best = 'balanced';
   }
 
   openScenarioModal(best);
