@@ -214,11 +214,11 @@ canvas{border-radius:var(--radius-md);background:transparent;flex-shrink:0;}
 .modal-apply-btn{width:100%;padding:12px;font-size:13.5px;}
 
 /* MACRO INTELLIGENCE PANEL */
-.macro-panel{background:linear-gradient(135deg,var(--navy-800),var(--navy-700));border-radius:var(--radius-xl);padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,.08);}
+.macro-panel{background:linear-gradient(135deg,#1a3260,#1e3d72);border-radius:var(--radius-xl);padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,.08);}
 .macro-panel .mp-title{font-size:11px;font-weight:700;color:var(--gold-300);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
 .macro-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 @media(max-width:860px){.macro-grid{grid-template-columns:1fr 1fr;}}
-.macro-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-lg);padding:12px 14px;}
+.macro-card{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:var(--radius-lg);padding:12px 14px;}
 .macro-card .mc-label{font-size:9.5px;font-weight:700;color:rgba(184,208,240,.6);letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px;}
 .macro-card .mc-value{font-size:20px;font-weight:700;color:#fff;letter-spacing:-.5px;}
 .macro-card .mc-sub{font-size:10.5px;color:rgba(184,208,240,.5);margin-top:3px;}
@@ -241,12 +241,15 @@ canvas{border-radius:var(--radius-md);background:transparent;flex-shrink:0;}
 .ap-toggle-arrow{font-size:12px;transition:transform .2s;}
 .ap-toggle-arrow.open{transform:rotate(180deg);}
 /* ANALYTICS MODELS PANEL ORIG */
-.analytics-panel{background:linear-gradient(160deg,#0a1628,#0f2040);border-radius:var(--radius-xl);padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,.08);}
+.analytics-panel{background:linear-gradient(160deg,#162d5a,#1e3d72);border-radius:var(--radius-xl);padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,.08);}
 .analytics-panel .ap-title{font-size:11px;font-weight:700;color:var(--gold-300);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
 .analytics-panel .ap-sub{font-size:11px;color:rgba(184,208,240,.5);margin-bottom:16px;}
 .analytics-fetch-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;}
 .analytics-status{font-size:11px;color:rgba(184,208,240,.5);}
 #analytics_results{max-height:500px;overflow-y:auto;scrollbar-width:thin;}
+.btn-renew-apply{background:rgba(232,184,58,.15);border:1px solid rgba(232,184,58,.4);color:var(--gold-300);font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;cursor:pointer;margin-left:4px;font-family:inherit;transition:background .15s;}
+.btn-renew-apply:hover{background:rgba(232,184,58,.3);}
+.btn-renew-apply.active{background:rgba(232,184,58,.35);color:var(--gold-200);}
 @media print{#site-header{position:static !important;}.action-bar,.watermark,.pdf-fab{display:none;}body{padding-bottom:0;}.card{box-shadow:none;}}
 @media(max-width:700px){.g3{grid-template-columns:1fr 1fr;}.g4{grid-template-columns:1fr 1fr;}.bottom-grid{grid-template-columns:1fr;}}
 ```
@@ -1146,7 +1149,8 @@ function rowTemplate(id, preset){
       <select id="method_${id}">${buildMethodOptionsHTML(prod,ccy)}</select>
       <div class="renew-wrap" id="renewWrap_${id}" hidden>
         <span>${renewLbl}</span>
-        <input type="number" id="renewEvery_${id}" min="1" step="1" value="2">
+        <input type="number" id="renewEvery_${id}" min="1" step="1" value="32">
+        <button type="button" class="btn-renew-apply" id="btnRenew_${id}" onclick="applyRenew('${id}')" title="Yenile ve hesapla">↩ Yenile</button>
       </div>
     </td>
     <td style="min-width:90px;">
@@ -1266,8 +1270,20 @@ function getMarketContext(){
 
   // Expected FX move % (annualized) — if we have end rates
   let fxMoveUSD = 0, fxMoveEUR = 0;
-  if(usdtry > 0 && usdtry_end > 0) fxMoveUSD = ((usdtry_end - usdtry) / usdtry) / (Tt || 1) * 100;
-  if(eurtry > 0 && eurtry_end > 0) fxMoveEUR = ((eurtry_end - eurtry) / eurtry) / (Tt || 1) * 100;
+  if(usdtry > 0 && usdtry_end > 0){
+    fxMoveUSD = ((usdtry_end - usdtry) / usdtry) / (Tt || 1) * 100;
+  } else if(usdtry > 0 && rTL > 0 && rUSD > 0){
+    // Kur girilmemişse: covered interest parity ile tahmini yıllık FX hareketi
+    // F/S = (1+rTL*Tt)/(1+rUSD*Tt) → annualized move
+    const fwdEst = usdtry * ((1 + rTL/100 * (Tt||1)) / (1 + rUSD/100 * (Tt||1)));
+    fxMoveUSD = ((fwdEst - usdtry) / usdtry) / (Tt || 1) * 100;
+  }
+  if(eurtry > 0 && eurtry_end > 0){
+    fxMoveEUR = ((eurtry_end - eurtry) / eurtry) / (Tt || 1) * 100;
+  } else if(eurtry > 0 && rTL > 0 && rEUR > 0){
+    const fwdEstEUR = eurtry * ((1 + rTL/100 * (Tt||1)) / (1 + rEUR/100 * (Tt||1)));
+    fxMoveEUR = ((fwdEstEUR - eurtry) / eurtry) / (Tt || 1) * 100;
+  }
 
   // Net carry (TL return minus FX depreciation cost)
   // If USD depreciates (TL appreciates), FX move is negative → good for TL carry trade
@@ -2923,6 +2939,33 @@ function toggleMacro(){
   const isOpen = body.style.display !== 'none';
   body.style.display = isOpen ? 'none' : 'block';
   if(arrow) arrow.classList.toggle('open', !isOpen);
+}
+
+/* ── MANUEL YENİLEME ── */
+// Kullanıcı "↩ Yenile" butonuna basınca o satır için RENEW hesabı yapar
+// Tekrar basınca SIMPLE'a döner
+function applyRenew(id){
+  const methEl = document.getElementById('method_'+id);
+  const btn    = document.getElementById('btnRenew_'+id);
+  if(!methEl || !btn) return;
+
+  if(methEl.value === 'RENEW'){
+    // Zaten RENEW modunda → SIMPLE'a dön
+    methEl.value = 'SIMPLE';
+    btn.textContent = '↩ Yenile';
+    btn.classList.remove('active');
+    btn.title = 'Yenilemeli hesaba geç';
+  } else {
+    // SIMPLE/DAILY modundan RENEW'a geç
+    methEl.value = 'RENEW';
+    btn.textContent = '✓ Yenileniyor';
+    btn.classList.add('active');
+    btn.title = 'Normal hesaba dön';
+  }
+  syncRenewVisibility(id);
+  // Hesabı tetikle
+  const calcBtn = document.getElementById('btn_calc');
+  if(calcBtn) calcBtn.click();
 }
 </script>
 
