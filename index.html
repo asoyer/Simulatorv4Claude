@@ -6,6 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>PB Allocation Engine</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PB Engine">
+  <meta name="theme-color" content="#040d1a">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23040d1a'/><circle cx='50' cy='32' r='14' fill='none' stroke='%23e8b83a' stroke-width='4'/><circle cx='50' cy='32' r='6' fill='%23e8b83a'/><circle cx='30' cy='66' r='14' fill='none' stroke='%23e8b83a' stroke-width='4'/><circle cx='30' cy='66' r='6' fill='%23e8b83a'/><circle cx='70' cy='66' r='14' fill='none' stroke='%23e8b83a' stroke-width='4'/><circle cx='70' cy='66' r='6' fill='%23e8b83a'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
@@ -182,12 +186,12 @@ canvas{border-radius:var(--radius-md);background:transparent;flex-shrink:0;}
 .status-pill{padding:4px 10px;background:var(--surface-2);border:1px solid var(--border-mid);border-radius:var(--radius-full);font-size:10.5px;font-weight:600;color:var(--text-muted);}
 
 /* ACTION BAR */
-.action-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;width:360px;max-width:calc(100vw - 24px);background:rgba(255,255,255,.92);border:1px solid var(--border-mid);border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:200;padding:10px 12px;}
+.action-bar{position:fixed;left:50%;transform:translateX(-50%);bottom:70px;width:360px;max-width:calc(100vw - 24px);background:rgba(255,255,255,.92);border:1px solid var(--border-mid);border-radius:var(--radius-xl);box-shadow:var(--shadow-xl);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:200;padding:10px 12px;}
 .action-bar-inner{display:flex;gap:8px;align-items:center;}
 .action-bar .btn{flex:1;text-align:center;padding:11px 12px;font-size:13px;}
-.pdf-fab{position:fixed;right:16px;bottom:12px;z-index:201;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--navy-700),var(--navy-600));border:1px solid rgba(255,255,255,.12);box-shadow:0 4px 16px rgba(10,22,40,.3);color:#fff;font-size:10px;font-weight:700;font-family:inherit;letter-spacing:.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.pdf-fab{position:fixed;right:16px;bottom:72px;z-index:201;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--navy-700),var(--navy-600));border:1px solid rgba(255,255,255,.12);box-shadow:0 4px 16px rgba(10,22,40,.3);color:#fff;font-size:10px;font-weight:700;font-family:inherit;letter-spacing:.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;}
 .pdf-fab:hover{transform:translateY(-1px);}
-.watermark{position:fixed;right:72px;bottom:20px;font-size:11px;font-weight:700;color:var(--text-muted);background:rgba(255,255,255,.85);border:1px solid var(--border-mid);padding:5px 12px;border-radius:var(--radius-full);backdrop-filter:blur(6px);z-index:9;pointer-events:none;letter-spacing:.3px;}
+.watermark{position:fixed;right:72px;bottom:80px;font-size:11px;font-weight:700;color:var(--text-muted);background:rgba(255,255,255,.85);border:1px solid var(--border-mid);padding:5px 12px;border-radius:var(--radius-full);backdrop-filter:blur(6px);z-index:9;pointer-events:none;letter-spacing:.3px;}
 
 /* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(4,13,26,.55);backdrop-filter:blur(4px);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
@@ -235,21 +239,148 @@ canvas{border-radius:var(--radius-md);background:transparent;flex-shrink:0;}
 .macro-input-group input:focus{border-color:var(--gold-400);box-shadow:0 0 0 2px rgba(232,184,58,.15);}
 .macro-fetch-row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:center;}
 .macro-status{font-size:11px;color:rgba(184,208,240,.6);}
-/* ANALYTICS MODELS PANEL */
-.ap-toggle{width:100%;background:none;border:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;color:var(--gold-300);font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;font-family:inherit;padding:0;}
-.ap-toggle:hover{color:var(--gold-200);}
-.ap-toggle-arrow{font-size:12px;transition:transform .2s;}
-.ap-toggle-arrow.open{transform:rotate(180deg);}
-/* ANALYTICS MODELS PANEL ORIG */
-.analytics-panel{background:linear-gradient(160deg,#162d5a,#1e3d72);border-radius:var(--radius-xl);padding:20px;margin-bottom:16px;border:1px solid rgba(255,255,255,.08);}
-.analytics-panel .ap-title{font-size:11px;font-weight:700;color:var(--gold-300);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:8px;}
-.analytics-panel .ap-sub{font-size:11px;color:rgba(184,208,240,.5);margin-bottom:16px;}
-.analytics-fetch-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px;}
-.analytics-status{font-size:11px;color:rgba(184,208,240,.5);}
-#analytics_results{max-height:500px;overflow-y:auto;scrollbar-width:thin;}
+
 .btn-renew-apply{background:rgba(232,184,58,.15);border:1px solid rgba(232,184,58,.4);color:var(--gold-300);font-size:10px;font-weight:600;padding:3px 8px;border-radius:6px;cursor:pointer;margin-left:4px;font-family:inherit;transition:background .15s;}
 .btn-renew-apply:hover{background:rgba(232,184,58,.3);}
 .btn-renew-apply.active{background:rgba(232,184,58,.35);color:var(--gold-200);}
+
+/* ══════════════════════════════════════
+   BOTTOM NAV & PAGE SYSTEM
+══════════════════════════════════════ */
+.page { display:none; }
+.page.active { display:block; }
+.bottom-nav {
+  position:fixed; bottom:0; left:0; right:0; z-index:200;
+  background:#040d1a;
+  border-top:1px solid rgba(255,255,255,.10);
+  display:flex; align-items:stretch;
+  height:58px;
+  padding-bottom:env(safe-area-inset-bottom);
+  box-shadow:0 -4px 20px rgba(4,13,26,.5);
+}
+.bottom-nav .nav-item {
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; gap:3px; cursor:pointer;
+  color:rgba(184,208,240,.45); font-size:9.5px; font-weight:600;
+  letter-spacing:.5px; text-transform:uppercase;
+  border:none; background:none; font-family:inherit;
+  transition:color .2s; padding:8px 4px 4px;
+  -webkit-tap-highlight-color:transparent;
+}
+.bottom-nav .nav-item svg { width:20px; height:20px; }
+.bottom-nav .nav-item.active { color:var(--gold-300); }
+.bottom-nav .nav-item.active svg { filter:drop-shadow(0 0 4px rgba(232,184,58,.5)); }
+body { padding-bottom:calc(72px + env(safe-area-inset-bottom)); }
+
+/* ══════════════════════════════════════
+   PORTFOLIO TRACKER PAGE
+══════════════════════════════════════ */
+.pt-hero {
+  background:linear-gradient(135deg,#040d1a,#0f2040);
+  border-radius:var(--radius-xl); padding:20px;
+  margin-bottom:16px; border:1px solid rgba(255,255,255,.08);
+}
+.pt-hero-title { font-size:11px; font-weight:700; color:var(--gold-300);
+  letter-spacing:1.2px; text-transform:uppercase; margin-bottom:16px; }
+.pt-kpi-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.pt-kpi { background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.12);
+  border-radius:12px; padding:12px 14px; }
+.pt-kpi .k-label { font-size:9.5px; font-weight:700; color:rgba(184,208,240,.5);
+  letter-spacing:.8px; text-transform:uppercase; margin-bottom:4px; }
+.pt-kpi .k-val { font-size:18px; font-weight:700; color:#fff; letter-spacing:-.5px; }
+.pt-kpi .k-sub { font-size:10px; color:rgba(184,208,240,.45); margin-top:2px; }
+.pt-kpi.green .k-val { color:#4ade80; }
+.pt-kpi.red   .k-val { color:#f87171; }
+.pt-kpi.gold  .k-val { color:var(--gold-300); }
+
+.client-card {
+  background:var(--surface-0); border:1px solid var(--border-light);
+  border-radius:var(--radius-xl); padding:18px; margin-bottom:12px;
+  box-shadow:var(--shadow-sm); cursor:pointer;
+  transition:box-shadow .2s, border-color .2s;
+}
+.client-card:hover { box-shadow:var(--shadow-md); border-color:var(--border-mid); }
+.client-card.expanded { border-color:rgba(232,184,58,.3); box-shadow:0 0 0 2px rgba(232,184,58,.08); }
+.cc-header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.cc-name { font-size:14px; font-weight:700; color:var(--text-primary); }
+.cc-meta { font-size:11px; color:var(--text-muted); margin-top:2px; }
+.cc-pl { font-size:16px; font-weight:700; text-align:right; }
+.cc-pl.pos { color:var(--success); }
+.cc-pl.neg { color:var(--danger); }
+.cc-pl.neu { color:var(--text-muted); }
+.cc-pl-sub { font-size:10px; color:var(--text-muted); text-align:right; margin-top:1px; }
+.cc-body { display:none; margin-top:14px; border-top:1px solid var(--border-light); padding-top:14px; }
+.cc-body.open { display:block; }
+.cc-alloc-table { width:100%; border-collapse:collapse; font-size:12px; }
+.cc-alloc-table th { color:var(--text-muted); font-weight:600; font-size:10px;
+  letter-spacing:.5px; text-transform:uppercase; padding:6px 8px; text-align:right;
+  border-bottom:1px solid var(--border-light); }
+.cc-alloc-table th:first-child { text-align:left; }
+.cc-alloc-table td { padding:7px 8px; text-align:right;
+  border-bottom:1px solid rgba(30,61,114,.05); color:var(--text-primary); }
+.cc-alloc-table td:first-child { text-align:left; font-weight:500; }
+.cc-alloc-table tr:last-child td { border-bottom:none; }
+.cc-alloc-table .pl-pos { color:var(--success); font-weight:600; }
+.cc-alloc-table .pl-neg { color:var(--danger); font-weight:600; }
+.cc-action-row { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+.pt-add-btn {
+  width:100%; padding:14px; border-radius:var(--radius-lg);
+  background:rgba(232,184,58,.08); border:2px dashed rgba(232,184,58,.3);
+  color:var(--gold-500); font-size:13px; font-weight:600;
+  cursor:pointer; font-family:inherit; transition:all .2s;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.pt-add-btn:hover { background:rgba(232,184,58,.14); border-color:rgba(232,184,58,.5); }
+
+/* Modal */
+.pt-modal-overlay {
+  position:fixed; inset:0; background:rgba(4,13,26,.75);
+  z-index:500; display:flex; align-items:flex-end;
+  opacity:0; pointer-events:none; transition:opacity .25s;
+}
+.pt-modal-overlay.open { opacity:1; pointer-events:all; }
+.pt-modal {
+  background:var(--surface-0); border-radius:var(--radius-xl) var(--radius-xl) 0 0;
+  padding:24px 20px 40px; width:100%;
+  max-height:88vh; overflow-y:auto;
+  transform:translateY(100%); transition:transform .3s cubic-bezier(.4,0,.2,1);
+}
+.pt-modal-overlay.open .pt-modal { transform:translateY(0); }
+.pt-modal-title { font-size:16px; font-weight:700; color:var(--text-primary);
+  margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; }
+.pt-modal-close { background:var(--surface-2); border:none; border-radius:50%;
+  width:32px; height:32px; cursor:pointer; font-size:16px;
+  display:flex; align-items:center; justify-content:center; }
+.pt-field { margin-bottom:14px; }
+.pt-field label { display:block; font-size:11px; font-weight:600;
+  color:var(--text-muted); letter-spacing:.5px; text-transform:uppercase;
+  margin-bottom:5px; }
+.pt-field input, .pt-field select {
+  width:100%; padding:10px 12px; border-radius:var(--radius-md);
+  border:1px solid var(--border-mid); background:var(--surface-1);
+  color:var(--text-primary); font-size:14px; font-family:inherit;
+}
+.pt-field input:focus, .pt-field select:focus {
+  outline:none; border-color:var(--gold-400);
+  box-shadow:0 0 0 3px rgba(232,184,58,.12);
+}
+.pt-alloc-row { display:grid; grid-template-columns:100px 52px 80px 64px 52px 28px;
+  gap:6px; align-items:center; margin-bottom:8px; }
+.pt-alloc-row input, .pt-alloc-row select { padding:6px 5px; font-size:12px; }
+.pt-alloc-del { background:none; border:none; color:var(--danger);
+  cursor:pointer; font-size:16px; width:32px; text-align:center; }
+.pt-alloc-add { background:rgba(30,61,114,.08); border:1px dashed var(--border-mid);
+  border-radius:var(--radius-md); padding:8px; color:var(--text-muted);
+  font-size:12px; cursor:pointer; width:100%; font-family:inherit;
+  margin-top:4px; }
+.days-badge { display:inline-block; padding:2px 8px; border-radius:var(--radius-full);
+  font-size:10px; font-weight:700; letter-spacing:.5px; }
+.days-badge.running { background:rgba(74,222,128,.12); color:#16a34a; }
+.days-badge.matured { background:rgba(248,113,113,.12); color:#dc2626; }
+@media(max-width:640px){
+  .pt-alloc-row { grid-template-columns:1fr 70px 70px 80px 50px 28px; gap:4px; }
+  .pt-kpi-row { grid-template-columns:1fr 1fr; }
+}
 @media print{#site-header{position:static !important;}.action-bar,.watermark,.pdf-fab{display:none;}body{padding-bottom:0;}.card{box-shadow:none;}}
 @media(max-width:700px){.g3{grid-template-columns:1fr 1fr;}.g4{grid-template-columns:1fr 1fr;}.bottom-grid{grid-template-columns:1fr;}}
 ```
@@ -258,6 +389,9 @@ canvas{border-radius:var(--radius-md);background:transparent;flex-shrink:0;}
 </head>
 <body>
 
+<!-- ══ PAGE: SİMÜLATÖR ══ -->
+
+<div id="page-sim" class="page active">
 <div role="banner" id="site-header" style="background:#040d1a;background:linear-gradient(135deg,#040d1a 0%,#0a1628 50%,#0f2040 100%);border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(4,13,26,.4);">
   <div class="header-inner">
     <div class="header-top">
@@ -349,24 +483,6 @@ canvas{border-radius:var(--radius-md);background:transparent;flex-shrink:0;}
         <span class="macro-status" id="macro_status"></span>
       </div>
       <div class="macro-signal" id="macro_signal" style="display:none;"></div>
-    </div>
-  </div>
-
-  <!-- ANALYTICS MODELS PANEL (collapsible) -->
-
-  <div class="analytics-panel">
-    <button class="ap-toggle" id="btn_analytics_toggle" onclick="toggleAnalytics()">
-      <span>🔬 Analitik Modeller — Tarihsel Veri Sinyalleri</span>
-      <span class="ap-toggle-arrow" id="analytics_arrow">▼</span>
-    </button>
-    <div id="analytics_body" style="display:none;margin-top:14px;">
-      <div class="ap-sub">USD/TRY 1 yıllık tarihsel veri ile: Altın momentum · TRY volatilite · Carry/Vol Sharpe · Korelasyon kırılması</div>
-      <div class="analytics-fetch-row">
-        <button class="btn btn-gold btn-sm" id="btn_fetch_analytics">📡 Veri Çek (1 Yıl)</button>
-        <button class="btn btn-ghost btn-sm" id="btn_run_models">⚡ Modelleri Çalıştır</button>
-        <span class="analytics-status" id="analytics_status">Henüz çekilmedi</span>
-      </div>
-      <div id="analytics_results"></div>
     </div>
   </div>
 
@@ -483,7 +599,11 @@ canvas{border-radius:var(--radius-md);background:transparent;flex-shrink:0;}
 <!-- SATIR 2: Getiriler + Butonlar -->
 <div class="cfg-row2">
   <div class="cfg-row2-left">
-    <div class="section-label" style="margin-bottom:10px;">Getiri Oranları (%/yıl)</div>
+    <div class="section-label" style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;">
+      <span id="lbl_rates_title">Getiri Oranları (%/yıl)</span>
+      <button type="button" onclick="toggleProductRates()" style="font-size:10px;font-weight:600;padding:3px 10px;background:rgba(212,163,41,.12);border:1px solid rgba(212,163,41,.3);border-radius:6px;color:var(--gold-500);cursor:pointer;font-family:inherit;" id="btn_prod_rates">Ürün Bazlı ▼</button>
+    </div>
+    <!-- ÖZET GETİRİ (her zaman görünür) -->
     <div class="cfg-rates-grid">
       <div>
         <label id="lbl_rtl">TL Getiri</label>
@@ -496,6 +616,26 @@ canvas{border-radius:var(--radius-md);background:transparent;flex-shrink:0;}
       <div>
         <label id="lbl_reur">EUR Getiri</label>
         <input id="reur" type="number" step="0.01" value="3" />
+      </div>
+    </div>
+    <!-- ÜRÜN BAZLI GETİRİ (açılır/kapanır) -->
+    <div id="product-rates-grid" style="display:none;margin-top:12px;border-top:1px solid var(--border-light);padding-top:12px;">
+      <div style="font-size:10px;color:var(--text-muted);margin-bottom:8px;">Her ürün için getiri gir — boş bırakırsan yukarıdaki genel getiri kullanılır.</div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;min-width:420px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;padding:5px 8px;color:var(--text-muted);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border-light);width:110px;">Ürün</th>
+              <th style="padding:5px 8px;color:var(--gold-500);font-weight:700;font-size:10px;border-bottom:1px solid var(--border-light);">TL %</th>
+              <th style="padding:5px 8px;color:#5b8fd4;font-weight:700;font-size:10px;border-bottom:1px solid var(--border-light);">USD %</th>
+              <th style="padding:5px 8px;color:#6b9e6b;font-weight:700;font-size:10px;border-bottom:1px solid var(--border-light);">EUR %</th>
+              <th style="padding:5px 8px;color:#c4a35a;font-weight:700;font-size:10px;border-bottom:1px solid var(--border-light);">Altın %</th>
+            </tr>
+          </thead>
+          <tbody id="prod-rates-tbody">
+            <!-- JS tarafından doldurulur -->
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -589,6 +729,49 @@ canvas{border-radius:var(--radius-md);background:transparent;flex-shrink:0;}
   <div class="kpi-card"><div class="t">Net P/L (USD)</div><div class="v" id="pl_usd">—</div></div>
   <div class="kpi-card"><div class="t">Net P/L (EUR)</div><div class="v" id="pl_eur">—</div></div>
   <div class="kpi-card"><div class="t">Net P/L (Altın g)</div><div class="v" id="pl_xau">—</div></div>
+</div>
+
+<!-- YILLIKLANDIRILMİŞ GETİRİ BÖLÜMÜ -->
+<div id="annualized-section" style="display:none;margin-top:16px;">
+  <div class="section-label" id="lbl_annualized">📈 Yıllıklandırılmış Getiri Analizi</div>
+  <div style="background:linear-gradient(135deg,#1a3260,#1e3d72);border-radius:var(--radius-xl);padding:16px 18px;border:1px solid rgba(255,255,255,.08);">
+    <div class="kpi-grid" style="margin-bottom:12px;">
+      <div class="kpi-card" style="background:rgba(100,120,160,.18);border-color:rgba(150,180,220,.25);">
+        <div class="t" style="color:rgba(184,208,240,.55);font-size:10px;">Dönem</div>
+        <div class="v" style="color:#b8d0f0;font-size:17px;" id="ann_days">—</div>
+      </div>
+      <div class="kpi-card" style="background:rgba(180,120,20,.18);border-color:rgba(232,184,58,.3);">
+        <div class="t" style="color:rgba(232,184,58,.7);font-size:10px;">Brüt Getiri %</div>
+        <div class="v" style="color:#f0c84a;" id="ann_gross_pct">—</div>
+      </div>
+      <div class="kpi-card" style="background:rgba(30,80,180,.22);border-color:rgba(100,160,255,.3);">
+        <div class="t" style="color:rgba(130,180,255,.75);font-size:10px;">Net Getiri %</div>
+        <div class="v" style="color:#7fb8ff;" id="ann_net_pct">—</div>
+      </div>
+      <div class="kpi-card" style="background:rgba(212,163,41,.22);border-color:rgba(232,184,58,.45);">
+        <div class="t" style="color:var(--gold-300);font-size:10px;font-weight:700;">📈 Yıllık Net %</div>
+        <div class="v" style="color:var(--gold-200);font-size:22px;font-weight:800;" id="ann_annual_pct">—</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div style="background:rgba(255,255,255,.06);border-radius:10px;padding:10px 12px;">
+        <div style="font-size:9.5px;font-weight:700;color:rgba(184,208,240,.5);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;" id="ann_pr_label">Giriş PB</div>
+        <div style="font-size:11px;color:rgba(184,208,240,.8);">Dönemsel: <strong id="ann_period_pr" style="color:#fff;">—</strong></div>
+        <div style="font-size:11px;color:rgba(184,208,240,.8);margin-top:3px;">Yıllık: <strong id="ann_yearly_pr" style="color:var(--gold-300);">—</strong></div>
+      </div>
+      <div style="background:rgba(255,255,255,.06);border-radius:10px;padding:10px 12px;">
+        <div style="font-size:9.5px;font-weight:700;color:rgba(184,208,240,.5);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;">Rapor PB</div>
+        <div style="font-size:11px;color:rgba(184,208,240,.8);">Dönemsel: <strong id="ann_period_rp" style="color:#fff;">—</strong></div>
+        <div style="font-size:11px;color:rgba(184,208,240,.8);margin-top:3px;">Yıllık: <strong id="ann_yearly_rp" style="color:var(--gold-300);">—</strong></div>
+      </div>
+      <div style="background:rgba(255,255,255,.06);border-radius:10px;padding:10px 12px;">
+        <div style="font-size:9.5px;font-weight:700;color:rgba(184,208,240,.5);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;">Stopaj Etkisi</div>
+        <div style="font-size:11px;color:rgba(184,208,240,.8);">Toplam: <strong id="ann_tax_total" style="color:#f87171;">—</strong></div>
+        <div style="font-size:11px;color:rgba(184,208,240,.8);margin-top:3px;">Efektif oran: <strong id="ann_tax_eff" style="color:#f87171;">—</strong></div>
+      </div>
+    </div>
+    <div id="ann_note" style="margin-top:10px;font-size:11px;color:rgba(184,208,240,.5);line-height:1.4;"></div>
+  </div>
 </div>
 
 <div class="bottom-grid">
@@ -1132,8 +1315,10 @@ function buildMethodOptionsHTML(prod, targetCcy){
   let opts=`<option value="SIMPLE">${m.simple}</option>`;
   if(prod==='TERM'){
     opts+=`<option value="DAILY_COMPOUND">${m.daily}</option>`;
+    // Yenileme SADECE TL Vadeli Mevduatta
     if(targetCcy==='TL') opts+=`<option value="RENEW">${m.renew}</option>`;
   }
+  // Diğer ürünlerde (FUND, SUKUK, DPM) sadece Basit seçeneği
   return opts;
 }
 
@@ -1180,23 +1365,34 @@ function refreshMethodOptionsForRow(id, {keepValue}){
   syncRenewVisibility(id);
 }
 function syncRenewVisibility(id){
-  const prod=document.getElementById('prod_'+id).value;
-  const ccy=document.getElementById('ccy_'+id).value;
-  const method=document.getElementById('method_'+id).value;
+  const prodEl=document.getElementById('prod_'+id);
+  const ccyEl=document.getElementById('ccy_'+id);
+  const methEl=document.getElementById('method_'+id);
   const wrap=document.getElementById('renewWrap_'+id);
+  if(!prodEl||!ccyEl||!methEl) return;
+  const prod=prodEl.value, ccy=ccyEl.value;
+  // Method dropdown'ı ürün/ccy'e göre yeniden oluştur
+  const curVal=methEl.value;
+  methEl.innerHTML=buildMethodOptionsHTML(prod, ccy);
+  // Seçili değeri koru (geçerliyse)
+  if(Array.from(methEl.options).some(o=>o.value===curVal)) methEl.value=curVal;
+  else methEl.value='SIMPLE';
+  const method=methEl.value;
   if(wrap) wrap.hidden=!(prod==='TERM'&&ccy==='TL'&&method==='RENEW');
 }
 function applyDefaultsByProduct(id){
-  const prod=document.getElementById('prod_'+id).value;
-  const ccy=document.getElementById('ccy_'+id).value;
-  const rateEl=document.getElementById('rate_'+id);
-  const r=Number(rateEl.value)||0;
-  if(prod==='TERM'){ if(r===0) rateEl.value=(ccy==='TL')?35:5; }
-  else if(prod==='FUND'){ if(r===0) rateEl.value=45; }
-  else if(prod==='SUKUK'){ if(r===0) rateEl.value=(ccy==='TL')?38:7; }
-  else if(prod==='DPM'){ if(r===0) rateEl.value=12; }
+  var prod   = document.getElementById('prod_'+id) ? document.getElementById('prod_'+id).value : '';
+  var ccy    = document.getElementById('ccy_'+id)  ? document.getElementById('ccy_'+id).value  : '';
+  var rateEl = document.getElementById('rate_'+id);
+  if(!prod || !ccy || !rateEl) return;
+  var r = Number(rateEl.value) || 0;
+  if(r === 0){
+    var suggested = getProdRate(prod, ccy);
+    if(suggested > 0) rateEl.value = suggested.toFixed(1);
+  }
   syncRenewVisibility(id);
 }
+
 
 function addRow(preset){
   preset=preset||{};
@@ -1285,20 +1481,31 @@ function getMarketContext(){
     fxMoveEUR = ((fwdEstEUR - eurtry) / eurtry) / (Tt || 1) * 100;
   }
 
-  // Net carry (TL return minus FX depreciation cost)
-  // If USD depreciates (TL appreciates), FX move is negative → good for TL carry trade
-  const netCarryTL_vsUSD = carryVsUSD - fxMoveUSD;
-  const netCarryTL_vsEUR = carryVsEUR - fxMoveEUR;
+  // Net carry — after-tax (FUND %17.5, TERM TL %17.5 kısa vade)
+  // Senaryo ağırlıklı ortalama vergi oranı ~17.5% (FUND dominant)
+  const blendedTaxRate = 0.175; // ağırlıklı ort. stopaj
+  const rTL_net = rTL * (1 - blendedTaxRate); // vergi sonrası efektif TL getiri
+  const netCarryTL_vsUSD = (rTL_net - rUSD) - fxMoveUSD;
+  const netCarryTL_vsEUR = (rTL_net - rEUR) - fxMoveEUR;
+  // Brüt carry (vergi öncesi, bilgi amaçlı)
+  const grossCarryVsUSD  = carryVsUSD - fxMoveUSD;
 
-  // Carry attractiveness: > 10pp net → very attractive
+  // Carry attractiveness — VERGİ SONRASI net carry baz alınır
   const carryAttractive = netCarryTL_vsUSD > 10;
   const carryNeutral    = netCarryTL_vsUSD > 0 && netCarryTL_vsUSD <= 10;
   const carryNegative   = netCarryTL_vsUSD <= 0;
 
+  // Break-even USD/TRY: vade sonunda müşteri USD bazında başa baş olduğu kur
+  const breakEvenFX = usdtry > 0
+    ? usdtry * (1 + (rTL_net - rUSD) / 100 * (Tt || 1))
+    : 0;
+
   return {
     principalCcy, rTL, rUSD, rEUR, usdtry, eurtry, usdtry_end, eurtry_end,
     days, Tt, carryVsUSD, carryVsEUR, fxMoveUSD, fxMoveEUR,
-    netCarryTL_vsUSD, netCarryTL_vsEUR, carryAttractive, carryNeutral, carryNegative
+    rTL_net, blendedTaxRate, grossCarryVsUSD,
+    netCarryTL_vsUSD, netCarryTL_vsEUR, carryAttractive, carryNeutral, carryNegative,
+    breakEvenFX
   };
 }
 
@@ -1670,15 +1877,15 @@ function updateScenarioInsightBar(){
     if(ctx.carryAttractive){
       msg = L()==='en'
         ? `💡 <strong>USD client:</strong> TL carry spread is <strong>${ctx.carryVsUSD.toFixed(0)}pp</strong> — exceptional. Even with ${ctx.fxMoveUSD.toFixed(1)}%/yr FX depreciation baked in, net carry is <strong>${ctx.netCarryTL_vsUSD.toFixed(1)}pp</strong>. Carry Trade Maximizer scenario strongly indicated.`
-        : `💡 <strong>USD müşteri:</strong> TL carry spreadi <strong>${ctx.carryVsUSD.toFixed(0)}pp</strong> — istisnai. ${ctx.fxMoveUSD.toFixed(1)}%/yıl FX değer kaybı dahil, net carry <strong>${ctx.netCarryTL_vsUSD.toFixed(1)}pp</strong>. Carry Trade Maksimizasyonu senaryosu güçlü şekilde öneriliyor.`;
+        : `💡 <strong>USD müşteri:</strong> TL carry spreadi <strong>${ctx.carryVsUSD.toFixed(0)}pp</strong> — istisnai. ${ctx.fxMoveUSD.toFixed(1)}%/yıl FX değer kaybı + %17.5 stopaj dahil, net carry <strong>${ctx.netCarryTL_vsUSD.toFixed(1)}pp</strong>. Break-even USD/TRY: <strong>${ctx.breakEvenFX>0?ctx.breakEvenFX.toFixed(2):'—'}</strong>. Carry Trade Maksimizasyonu senaryosu güçlü şekilde öneriliyor.`;
     } else if(ctx.carryNeutral){
       msg = L()==='en'
         ? `💡 <strong>USD client:</strong> TL carry spread ${ctx.carryVsUSD.toFixed(0)}pp but net carry after FX is only ${ctx.netCarryTL_vsUSD.toFixed(1)}pp. Balanced or FX Hedge scenario recommended.`
-        : `💡 <strong>USD müşteri:</strong> TL carry spreadi ${ctx.carryVsUSD.toFixed(0)}pp, ancak FX sonrası net carry yalnızca ${ctx.netCarryTL_vsUSD.toFixed(1)}pp. Dengeli veya FX Hedge senaryosu önerilir.`;
+        : `💡 <strong>USD müşteri:</strong> TL brüt carry ${ctx.carryVsUSD.toFixed(0)}pp, ancak stopaj + FX sonrası net carry <strong>${ctx.netCarryTL_vsUSD.toFixed(1)}pp</strong>. Break-even kur: <strong>${ctx.breakEvenFX>0?ctx.breakEvenFX.toFixed(2):'—'}</strong>. Dengeli veya FX Hedge senaryosu önerilir.`;
     } else {
       msg = L()==='en'
         ? `⚠️ <strong>USD client:</strong> Net TL carry is negative (${ctx.netCarryTL_vsUSD.toFixed(1)}pp) — FX depreciation exceeds yield. Capital Protection or FX-centric scenario recommended.`
-        : `⚠️ <strong>USD müşteri:</strong> Net TL carry negatif (${ctx.netCarryTL_vsUSD.toFixed(1)}pp) — FX değer kaybı getiriyi aşıyor. Sermaye Koruma veya FX odaklı senaryo önerilir.`;
+        : `⚠️ <strong>USD müşteri:</strong> Stopaj + FX sonrası net carry <strong>${ctx.netCarryTL_vsUSD.toFixed(1)}pp negatif</strong> — TL getirisi kur kaybını + vergiyi karşılamıyor. Break-even kur: <strong>${ctx.breakEvenFX>0?ctx.breakEvenFX.toFixed(2):'—'}</strong>. Sermaye Koruma veya FX odaklı senaryo önerilir.`;
     }
   } else if(ctx.principalCcy === 'TL'){
     msg = L()==='en'
@@ -1769,7 +1976,15 @@ function calc(){
     const amtBase=clamp(parseAmount(document.getElementById('amt_'+id).value));
     const prod=document.getElementById('prod_'+id).value;
     const targetCcy=document.getElementById('ccy_'+id).value;
-    const rate=Number(document.getElementById('rate_'+id).value)||0;
+    let rate=Number(document.getElementById('rate_'+id).value)||0;
+    // Ürün bazlı getiri girilmişse kullan
+    if(typeof getProdRate === 'function'){
+      const prodRate = getProdRate(prod, targetCcy);
+      if(prodRate > 0 && rate === 0) {
+        rate = prodRate;
+        document.getElementById('rate_'+id).value = prodRate.toFixed(1);
+      }
+    }
     const method=document.getElementById('method_'+id).value;
     const taxAuto=!!document.getElementById('taxAuto_'+id)?.checked;
     let taxPct=Number(document.getElementById('tax_'+id).value)||0;
@@ -1896,6 +2111,75 @@ function calc(){
       el.style.color=val>=0?'var(--success)':val<0?'var(--danger)':'';
     }
   });
+
+  // ── YILLIKLANDIRILMİŞ GETİRİ HESABI ──
+  {
+    const annSec = document.getElementById('annualized-section');
+    if(annSec && principalAmt > 0 && days > 0){
+      annSec.style.display = 'block';
+      const Tt = days / 365;
+
+      // Brüt getiri = stopaj öncesi (endTotalReport - startTotalReport + totalTaxReport)
+      const grossReturn = endTotalReport - startTotalReport + totalTaxReport;
+      const netReturn   = endTotalReport - startTotalReport; // = plReport
+
+      // Yüzde olarak
+      const grossPct  = startTotalReport > 0 ? (grossReturn / startTotalReport * 100) : 0;
+      const netPct    = startTotalReport > 0 ? (netReturn   / startTotalReport * 100) : 0;
+
+      // Yıllıklandırılmış (basit orantı — müşteriye anlaşılır)
+      const annualGrossPct = Tt > 0 ? grossPct / Tt : 0;
+      const annualNetPct   = Tt > 0 ? netPct   / Tt : 0;
+
+      // Giriş PB bazında
+      const plPr = endTotalPrincipal - principalAmt;
+      const periodPrPct  = principalAmt > 0 ? (plPr / principalAmt * 100) : 0;
+      const annualPrPct  = Tt > 0 ? periodPrPct / Tt : 0;
+
+      // Rapor PB bazında
+      const periodRpPct  = startTotalReport > 0 ? (plReport / startTotalReport * 100) : 0;
+      const annualRpPct  = Tt > 0 ? periodRpPct / Tt : 0;
+
+      // Efektif stopaj oranı
+      const effTaxRate = grossReturn > 0 ? (totalTaxReport / grossReturn * 100) : 0;
+
+      // Render
+      const fmt1 = n => (n >= 0 ? '+' : '') + n.toFixed(2) + '%';
+      const fmtAnn = n => (n >= 0 ? '+' : '') + n.toFixed(1) + '%/yıl';
+
+      document.getElementById('ann_days').textContent        = days.toFixed(0) + ' gün';
+      document.getElementById('ann_gross_pct').textContent   = fmt1(grossPct);
+      document.getElementById('ann_net_pct').textContent     = fmt1(netPct);
+      document.getElementById('ann_annual_pct').textContent  = fmtAnn(annualNetPct);
+      document.getElementById('ann_period_pr').textContent   = fmt1(periodPrPct);
+      document.getElementById('ann_yearly_pr').textContent   = fmtAnn(annualPrPct);
+      document.getElementById('ann_period_rp').textContent   = fmt1(periodRpPct);
+      document.getElementById('ann_yearly_rp').textContent   = fmtAnn(annualRpPct);
+      document.getElementById('ann_tax_total').textContent   = fmtMoney(totalTaxReport, reportCcy);
+      document.getElementById('ann_tax_eff').textContent     = effTaxRate.toFixed(1) + '%';
+      const prLabel = document.getElementById('ann_pr_label');
+      if(prLabel) prLabel.textContent = `Giriş PB (${principalCcy})`;
+
+      // Color annual pct
+      const annEl = document.getElementById('ann_annual_pct');
+      if(annEl) annEl.style.color = annualNetPct >= 0 ? 'var(--gold-300)' : '#f87171';
+
+      // Note
+      const noteEl2 = document.getElementById('ann_note');
+      if(noteEl2){
+        const breakEven = ctx?.breakEvenFX;
+        let noteText = L()==='en'
+          ? `Annualized return = period return ÷ ${Tt.toFixed(3)} years. Gross: ${fmt1(annualGrossPct)} | Net after tax: ${fmtAnn(annualNetPct)}.`
+          : `Yıllık getiri = dönem getirisi ÷ ${Tt.toFixed(3)} yıl. Brüt: ${fmt1(annualGrossPct)} | Stopaj sonrası net: ${fmtAnn(annualNetPct)}.`;
+        if(breakEven > 0 && principalCcy !== 'TL'){
+          noteText += (L()==='en')
+            ? ` Break-even USD/TRY: ${breakEven.toFixed(4)} — above this rate, USD-based return turns negative.`
+            : ` Başa baş USD/TRY: ${breakEven.toFixed(4)} — bu kurun üzerinde USD bazlı getiri negatife döner.`;
+        }
+        noteEl2.textContent = noteText;
+      }
+    }
+  }
 
   // FX Cross-currency note: warn when giriş PB ≠ hedef PB and negative cross P/L is expected
   {
@@ -2044,6 +2328,7 @@ function applyLang(){
 }
 
 function resetAll(){
+
   document.getElementById('total_amount').value='1.000.000';
   document.getElementById('total_ccy').value='USD';
   document.getElementById('report_ccy').value='TL';
@@ -2068,10 +2353,19 @@ function resetAll(){
   document.getElementById('headline_detail').textContent='';
   document.getElementById('headline_ccy_badge').textContent='–';
   ['kpi_used','kpi_left','kpi_start_report','kpi_end_report','kpi_pl_report','kpi_tax_report',
-   'sum_start_pr','sum_start_rp','sum_end_pr','sum_end_rp','pl_tl','pl_usd','pl_eur','pl_xau'
+   'sum_start_pr','sum_start_rp','sum_end_pr','sum_end_rp','pl_tl','pl_usd','pl_eur','pl_xau',
+   'ann_days','ann_gross_pct','ann_net_pct','ann_annual_pct','ann_period_pr','ann_yearly_pr','ann_period_rp','ann_yearly_rp','ann_tax_total','ann_tax_eff'
   ].forEach(id=>{ const el=document.getElementById(id); if(el){ el.textContent='—'; el.style.color=''; } });
   document.getElementById('allocBody').innerHTML='';
   addRow({amt:0,ccy:'TL',prod:'TERM',rate:35,method:'SIMPLE',taxAuto:true});
+  const _annSec=document.getElementById('annualized-section');
+  if(_annSec) _annSec.style.display='none';
+  // Ürün bazlı getiri sıfırla
+  for(var _k in PROD_RATE_STORE){ PROD_RATE_STORE[_k] = ''; }
+  var _prGrid = document.getElementById('product-rates-grid');
+  var _prBtn  = document.getElementById('btn_prod_rates');
+  if(_prGrid) _prGrid.style.display = 'none';
+  if(_prBtn)  _prBtn.textContent = 'Ürün Bazlı ▼';
   addRow({amt:0,ccy:'TL',prod:'FUND',rate:45,method:'SIMPLE',taxAuto:false,tax:0});
   document.getElementById('pieLegend').innerHTML='';
   const canvas=document.getElementById('pieStart');
@@ -2079,6 +2373,22 @@ function resetAll(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   setAmtHeader();
   autoFillEndRates();
+
+
+// Clear stored product rates
+  Object.keys(PROD_RATE_DEFAULTS).forEach(prod => {
+    Object.keys(PROD_RATE_DEFAULTS[prod]).forEach(ccy => {
+      PROD_RATE_DEFAULTS[prod][ccy] = null;
+      const el = document.getElementById(`pr_${prod}_${ccy}`);
+      if(el) el.value = '';
+    });
+  });
+  // Close product rates panel
+  const grid = document.getElementById('product-rates-grid');
+  const btn  = document.getElementById('btn_prod_rates');
+  if(grid) grid.style.display = 'none';
+  if(btn)  btn.textContent = 'Ürün Bazlı ▼';
+
 }
 
 /* ── WIRE ── */
@@ -2432,9 +2742,7 @@ function calcMacroSignal(){
   updateScenarioInsightBar();
 }
 
-// ── MACRO-ENHANCED SCENARIO SUGGESTION ──
-// Override suggestBestScenario to use macro signal
-const _originalSuggestBestScenario = suggestBestScenario;
+// ── SENARYO ÖNERİ: suggestBestScenario aşağıda tanımlanıyor ──
 
 // Wire macro buttons
 // btn_macro_fetch removed — TCMB API not publicly accessible
@@ -2450,486 +2758,6 @@ document.getElementById('usdtry').addEventListener('change', ()=>{
 });
 
 
-/* ═══════════════════════════════════════════════════════════════
-   ADVANCED ANALYTICS ENGINE v2
-   Models:
-   1. Altın Momentum    — 30d vs 12m avg, düzeltme sinyali
-   2. TRY Volatilite    — 30d USDTRY günlük std dev
-   3. Carry/Vol Oranı   — Sharpe benzeri carry skoru
-   4. Altın/USD Korelasyon Kırılması — risk-off dedektörü
-   All data from freegoldapi.com + open.er-api.com (no key needed)
-═══════════════════════════════════════════════════════════════ */
-
-const ANALYTICS = {
-  goldPrices: [],      // son 365 gün altın TRY fiyatı (gram)
-  usdtryPrices: [],    // son 365 gün USD/TRY
-  goldMomentum: null,
-  tryVolatility: null,
-  carryVolRatio: null,
-  correlationBreak: null,
-  lastFetch: null
-};
-
-// Günlük değişim yüzdeleri hesapla
-function dailyReturns(arr){
-  const r = [];
-  for(let i=1;i<arr.length;i++){
-    if(arr[i-1] > 0) r.push((arr[i]-arr[i-1])/arr[i-1]*100);
-  }
-  return r;
-}
-
-function mean(arr){ return arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0; }
-function stdDev(arr){
-  if(arr.length < 2) return 0;
-  const m = mean(arr);
-  return Math.sqrt(arr.reduce((a,b)=>a+(b-m)**2,0)/(arr.length-1));
-}
-function pearsonCorr(a, b){
-  const n = Math.min(a.length, b.length);
-  if(n < 5) return null;
-  const ax = a.slice(-n), bx = b.slice(-n);
-  const ma = mean(ax), mb = mean(bx);
-  let num=0, da=0, db=0;
-  for(let i=0;i<n;i++){
-    num += (ax[i]-ma)*(bx[i]-mb);
-    da  += (ax[i]-ma)**2;
-    db  += (bx[i]-mb)**2;
-  }
-  return (da&&db) ? num/Math.sqrt(da*db) : null;
-}
-
-// Tarihsel veri çek — goldapi.io (ücretsiz, no key) veya alternatif
-async function fetchHistoricalData(){
-  const statusEl = document.getElementById('analytics_status');
-  if(statusEl) statusEl.textContent = L()==='en' ? 'Fetching 1yr historical data…' : '1 yıllık tarihsel veri çekiliyor…';
-
-  // USD/TRY tarihsel — open.er-api.com timeseries yok, ama truncgil'den spot var
-  // Strateji: truncgil'den bugünkü fiyatı al, geçmiş için stored/simulated data kullan
-  // Gerçek tarihsel veri için: frankfurter.app (ücretsiz, CORS OK)
-  
-  let usdtryHistory = [];
-  let goldTRYHistory = [];
-
-  try {
-    // frankfurter.app — ECB tabanlı, ücretsiz, 1 yıllık veri
-    const endDate = new Date();
-    const startDate = new Date();
-    startDate.setFullYear(startDate.getFullYear()-1);
-    const fmt = d => d.toISOString().split('T')[0];
-    
-    const fxRes = await fetch(
-      `https://api.frankfurter.app/${fmt(startDate)}..${fmt(endDate)}?from=USD&to=TRY`,
-      { cache: 'no-store' }
-    );
-    if(fxRes.ok){
-      const fxData = await fxRes.json();
-      const dates = Object.keys(fxData.rates||{}).sort();
-      usdtryHistory = dates.map(d => fxData.rates[d]?.TRY || 0).filter(v=>v>0);
-      if(statusEl) statusEl.textContent = L()==='en'
-        ? `✓ USD/TRY: ${usdtryHistory.length} days loaded`
-        : `✓ USD/TRY: ${usdtryHistory.length} gün yüklendi`;
-    }
-  } catch(e){
-    if(statusEl) statusEl.textContent = '⚠ FX tarihsel veri çekilemedi';
-  }
-
-  // Altın TRY — goldprice.org JSON (ücretsiz)
-  try {
-    // freegoldapi.com XAU/TRY günlük (key yok)
-    const goldRes = await fetch(
-      'https://data-asg.goldprice.org/dbXRates/TRY',
-      { cache: 'no-store' }
-    );
-    if(goldRes.ok){
-      const gd = await goldRes.json();
-      // Bu endpoint güncel fiyat döner — tarihsel için farklı yaklaşım
-      const xauTRY = gd?.items?.[0]?.xauPrice;
-      if(xauTRY && usdtryHistory.length > 0){
-        // Altın TRY = XAU/USD × USD/TRY — XAU/USD tarihsel kullan
-        // Spot'tan geriye gidecek tahmin: %yıllık değişim ile simüle et
-        const spot = xauTRY;
-        // Son 1 yıl: XAU/TRY günlük momentum simülasyonu (spot + USD/TRY ile scale)
-        // Gerçek değerler olmadığı için USD/TRY ile korelasyonlu tahmin kullan
-        if(usdtryHistory.length > 50){
-          const usdScale = usdtryHistory[usdtryHistory.length-1] / usdtryHistory[0];
-          goldTRYHistory = usdtryHistory.map((u,i) => {
-            // Altın USD'de yatay kaldı varsayımı + TRY depreciation
-            return spot * (u / usdtryHistory[usdtryHistory.length-1]);
-          });
-        }
-      }
-    }
-  } catch(e){}
-
-  // Altın USD tarihsel — metals-api alternatifi yok ücretsiz
-  // Frankfurter.app XAU desteklemez
-  // En iyi ücretsiz kaynak: investing.com scraping — CORS engeli
-  // Pratik çözüm: truncgil + usdtry ile altın TRY hesapla
-  try {
-    const trRes = await fetch('https://finans.truncgil.com/v4/today.json', { cache:'no-store' });
-    if(trRes.ok){
-      const td = await trRes.json();
-      const graPrice = td?.GRA?.Selling || td?.GRA?.Buying;
-      const usdPrice = td?.USD?.Selling || td?.USD?.Buying;
-      if(graPrice && usdtryHistory.length > 10){
-        // XAU/TRY gram fiyatı bugün var, geriye dönük USD/TRY oranıyla ölçekle
-        const todayUSD = Number(usdPrice);
-        goldTRYHistory = usdtryHistory.map(u => Number(graPrice) * (u/todayUSD));
-      }
-    }
-  } catch(e){}
-
-  ANALYTICS.usdtryPrices = usdtryHistory;
-  ANALYTICS.goldPrices = goldTRYHistory.length > 0 ? goldTRYHistory : usdtryHistory; // fallback
-  ANALYTICS.lastFetch = new Date();
-
-  if(statusEl && usdtryHistory.length > 0){
-    statusEl.textContent = L()==='en'
-      ? `✓ ${usdtryHistory.length} days of data loaded. Run models →`
-      : `✓ ${usdtryHistory.length} günlük veri yüklendi. Modelleri çalıştır →`;
-  }
-
-  runAllModels();
-}
-
-function runAllModels(){
-  if(ANALYTICS.usdtryPrices.length < 30) {
-    renderAnalyticsResults([{
-      model:'⚠ Veri Yetersiz',
-      signal:'neutral',
-      summary: L()==='en'
-        ? 'Need at least 30 days of data. Click "Fetch Data" first.'
-        : 'En az 30 günlük veriye ihtiyaç var. Önce "Veri Çek" butonuna bas.',
-      detail:''
-    }]);
-    return;
-  }
-
-  const results = [];
-
-  // ── MODEL 1: ALTIN MOMENTUM ──
-  {
-    const gold = ANALYTICS.goldPrices;
-    const n = gold.length;
-    if(n >= 30){
-      const avg12m = mean(gold);
-      const avg30d = mean(gold.slice(-30));
-      const momentum = (avg30d - avg12m) / avg12m * 100;
-      const last7d   = mean(gold.slice(-7));
-      const prev7d   = mean(gold.slice(-14,-7));
-      const recentAcc = (last7d - prev7d)/prev7d*100; // son 1 hafta ivme
-
-      let signal, summary, detail;
-      if(momentum > 20 && recentAcc > 3){
-        signal = 'danger';
-        ANALYTICS.goldMomentum = 'CORRECTION_LIKELY';
-        summary = L()==='en'
-          ? `🔴 Gold momentum +${momentum.toFixed(1)}% above 12m avg — CORRECTION LIKELY`
-          : `🔴 Altın momentumu 12 ay ortalamasının ${momentum.toFixed(1)}% üzerinde — DÜZELTME BEKLENİYOR`;
-        detail = L()==='en'
-          ? `30-day avg is <strong>${momentum.toFixed(1)}%</strong> above the 12-month average, with recent weekly acceleration of <strong>+${recentAcc.toFixed(1)}%</strong>. Historical precedent: when gold overshoots 15%+ above 12m average, mean reversion follows within 4-8 weeks. <strong>Signal: Reduce gold exposure → rotate to TL term deposit for carry.</strong>`
-          : `30 günlük ortalama 12 aylık ortalamanın <strong>${momentum.toFixed(1)}%</strong> üzerinde, son haftalık ivme <strong>+${recentAcc.toFixed(1)}%</strong>. Tarihsel emsaller: altın 12 aylık ortalamanın 15%+ üzerine çıktığında 4-8 hafta içinde ortalamaya dönüş izlenir. <strong>Sinyal: Altın pozisyonunu azalt → TL vadeli mevduata carry için döndür.</strong>`;
-      } else if(momentum > 10){
-        signal = 'warning';
-        ANALYTICS.goldMomentum = 'ELEVATED';
-        summary = L()==='en'
-          ? `🟡 Gold momentum elevated (+${momentum.toFixed(1)}%) — monitor closely`
-          : `🟡 Altın momentumu yüksek (+${momentum.toFixed(1)}%) — yakından takip et`;
-        detail = L()==='en'
-          ? `Gold is running hot but not extreme. Recent weekly move: <strong>${recentAcc.toFixed(1)}%</strong>. Maintain current allocation but avoid adding gold exposure.`
-          : `Altın yüksek seyretse de aşırı değil. Son haftalık hareket: <strong>${recentAcc.toFixed(1)}%</strong>. Mevcut alokasyonu koru ama altın pozisyonu ekleme.`;
-      } else if(momentum < -10){
-        signal = 'positive';
-        ANALYTICS.goldMomentum = 'BUY_DIP';
-        summary = L()==='en'
-          ? `🟢 Gold below 12m avg (${momentum.toFixed(1)}%) — potential entry point`
-          : `🟢 Altın 12 ay ortalamasının altında (${momentum.toFixed(1)}%) — olası giriş noktası`;
-        detail = L()==='en'
-          ? `Gold is trading <strong>${Math.abs(momentum).toFixed(1)}%</strong> below 12-month average. Mean reversion thesis: consider modest gold allocation as inflation hedge, especially for TL-principal clients.`
-          : `Altın 12 aylık ortalamanın <strong>${Math.abs(momentum).toFixed(1)}%</strong> altında işlem görüyor. Ortalamaya dönüş tezi: enflasyon hedge'i olarak mütevazı altın alokasyonu düşünülebilir, özellikle TL girişli müşteriler için.`;
-      } else {
-        signal = 'neutral';
-        ANALYTICS.goldMomentum = 'STABLE';
-        summary = L()==='en'
-          ? `⚪ Gold stable — ${momentum.toFixed(1)}% vs 12m avg`
-          : `⚪ Altın stabil — 12 ay ortalamasına göre ${momentum.toFixed(1)}%`;
-        detail = L()==='en'
-          ? `Gold is trading near its 12-month average. No strong momentum signal. Maintain strategic allocation.`
-          : `Altın 12 aylık ortalamasına yakın seyrediyor. Güçlü momentum sinyali yok. Stratejik alokasyonu koru.`;
-      }
-      results.push({ model:'📊 Model 1 — Altın Momentum', signal, summary, detail });
-    }
-  }
-
-  // ── MODEL 2: TRY VOLATİLİTE ──
-  {
-    const usd = ANALYTICS.usdtryPrices;
-    if(usd.length >= 30){
-      const returns30d = dailyReturns(usd.slice(-31));
-      const returns12m = dailyReturns(usd);
-      const vol30d = stdDev(returns30d);
-      const vol12m = stdDev(returns12m);
-      const volRatio = vol12m > 0 ? vol30d / vol12m : 1;
-
-      ANALYTICS.tryVolatility = vol30d;
-
-      let signal, summary, detail;
-      if(vol30d > 0.8 || volRatio > 1.5){
-        signal = 'danger';
-        summary = L()==='en'
-          ? `🔴 USD/TRY volatility elevated — ${vol30d.toFixed(2)}%/day (${(vol30d*Math.sqrt(252)).toFixed(1)}% annualized)`
-          : `🔴 USD/TRY volatilitesi yüksek — günlük ${vol30d.toFixed(2)}% (yıllık ${(vol30d*Math.sqrt(252)).toFixed(1)}%)`;
-        detail = L()==='en'
-          ? `30-day daily volatility is <strong>${vol30d.toFixed(2)}%</strong> (annualized: <strong>${(vol30d*Math.sqrt(252)).toFixed(1)}%</strong>), which is <strong>${((volRatio-1)*100).toFixed(0)}% above</strong> the 12-month norm. High FX volatility erodes carry trade returns unpredictably. <strong>Signal: Reduce TL carry → increase USD/EUR fixed income until vol normalizes.</strong>`
-          : `30 günlük günlük volatilite <strong>${vol30d.toFixed(2)}%</strong> (yıllık: <strong>${(vol30d*Math.sqrt(252)).toFixed(1)}%</strong>), 12 aylık normanın <strong>${((volRatio-1)*100).toFixed(0)}% üzerinde</strong>. Yüksek FX volatilitesi carry trade getirilerini öngörülemez şekilde aşındırır. <strong>Sinyal: TL carry azalt → volatilite normalleşene kadar USD/EUR sabit geliri artır.</strong>`;
-      } else if(vol30d < 0.3 && volRatio < 0.7){
-        signal = 'positive';
-        summary = L()==='en'
-          ? `🟢 USD/TRY volatility low — ${vol30d.toFixed(2)}%/day — favorable for carry`
-          : `🟢 USD/TRY volatilitesi düşük — günlük ${vol30d.toFixed(2)}% — carry için elverişli`;
-        detail = L()==='en'
-          ? `Very low FX volatility (${vol30d.toFixed(2)}%/day annualized ${(vol30d*Math.sqrt(252)).toFixed(1)}%). Low vol = carry trade is attractive — the spread is realized with minimal FX noise. <strong>Signal: Carry/Vol ratio is favorable. Increase TL carry allocation.</strong>`
-          : `Çok düşük FX volatilitesi (${vol30d.toFixed(2)}%/gün, yıllık ${(vol30d*Math.sqrt(252)).toFixed(1)}%). Düşük volatilite = carry trade cazip — spread minimal FX gürültüsüyle realize edilir. <strong>Sinyal: Carry/Vol oranı elverişli. TL carry alokasyonunu artır.</strong>`;
-      } else {
-        signal = 'neutral';
-        summary = L()==='en'
-          ? `🟡 USD/TRY volatility normal — ${vol30d.toFixed(2)}%/day`
-          : `🟡 USD/TRY volatilitesi normal — günlük ${vol30d.toFixed(2)}%`;
-        detail = L()==='en'
-          ? `Volatility is within historical norms. Carry trade is viable but apply standard risk management.`
-          : `Volatilite tarihsel normlar içinde. Carry trade uygulanabilir, standart risk yönetimi uygula.`;
-      }
-      results.push({ model:'📉 Model 2 — TRY Volatilite', signal, summary, detail });
-    }
-  }
-
-  // ── MODEL 3: CARRY/VOL ORANI (Sharpe Proxy) ──
-  {
-    const rTL  = Number(document.getElementById('rtl').value)  || 45;
-    const rUSD = Number(document.getElementById('rusd').value) || 5;
-    const carrySpread = rTL - rUSD;
-    const vol = ANALYTICS.tryVolatility;
-
-    if(vol > 0){
-      const annualVol = vol * Math.sqrt(252);
-      const carryVolRatio = carrySpread / annualVol;
-      ANALYTICS.carryVolRatio = carryVolRatio;
-
-      let signal, summary, detail;
-      if(carryVolRatio >= 2){
-        signal = 'positive';
-        summary = L()==='en'
-          ? `🟢 Carry/Vol Ratio: ${carryVolRatio.toFixed(2)} — Excellent carry environment`
-          : `🟢 Carry/Vol Oranı: ${carryVolRatio.toFixed(2)} — Mükemmel carry ortamı`;
-        detail = L()==='en'
-          ? `Carry spread of <strong>${carrySpread.toFixed(0)}pp</strong> divided by annualized FX vol of <strong>${annualVol.toFixed(1)}%</strong> = ratio <strong>${carryVolRatio.toFixed(2)}</strong>. A ratio above 2.0 is historically associated with strong risk-adjusted carry returns. This is the institutional threshold for committing to TL carry positions. <strong>Signal: Maximum TL carry allocation justified.</strong>`
-          : `<strong>${carrySpread.toFixed(0)}pp</strong> carry spreadinin yıllık <strong>${annualVol.toFixed(1)}%</strong> FX volatilitesine bölümü = oran <strong>${carryVolRatio.toFixed(2)}</strong>. 2.0 üzerindeki oran tarihsel olarak güçlü riske göre düzeltilmiş carry getirisiyle ilişkilidir. Bu, TL carry pozisyonlarına girme kurumsal eşiğidir. <strong>Sinyal: Maksimum TL carry alokasyonu haklı.</strong>`;
-      } else if(carryVolRatio >= 1){
-        signal = 'neutral';
-        summary = L()==='en'
-          ? `🟡 Carry/Vol Ratio: ${carryVolRatio.toFixed(2)} — Moderate carry attractiveness`
-          : `🟡 Carry/Vol Oranı: ${carryVolRatio.toFixed(2)} — Orta carry cazibi`;
-        detail = L()==='en'
-          ? `Ratio between 1 and 2 suggests carry is positive but not overwhelmingly attractive on risk-adjusted basis. <strong>Signal: Balanced TL/FX allocation. Don't overcommit to carry.</strong>`
-          : `1 ile 2 arasındaki oran, carryin pozitif ama riske göre düzeltilmiş bazda ezici derecede cazip olmadığını gösterir. <strong>Sinyal: Dengeli TL/FX alokasyonu. Carry'ye aşırı bağlanma.</strong>`;
-      } else {
-        signal = 'danger';
-        summary = L()==='en'
-          ? `🔴 Carry/Vol Ratio: ${carryVolRatio.toFixed(2)} — Carry not worth the FX risk`
-          : `🔴 Carry/Vol Oranı: ${carryVolRatio.toFixed(2)} — Carry FX riskine değmez`;
-        detail = L()==='en'
-          ? `A ratio below 1.0 means FX volatility is large relative to the carry spread — you are not being adequately compensated for FX risk. <strong>Signal: Avoid TL carry. Switch to USD/EUR fixed income.</strong>`
-          : `1.0 altındaki oran, FX volatilitesinin carry spreadine göre büyük olduğu anlamına gelir — FX riski için yeterince tazmin edilmiyorsunuz. <strong>Sinyal: TL carry'den kaçın. USD/EUR sabit gelire geç.</strong>`;
-      }
-      results.push({ model:'⚡ Model 3 — Carry/Vol Oranı (Sharpe Proxy)', signal, summary, detail });
-    }
-  }
-
-  // ── MODEL 4: ALTIN/USD KORELASYON KIRILMASI ──
-  {
-    const gold = ANALYTICS.goldPrices;
-    const usd  = ANALYTICS.usdtryPrices;
-    const minLen = Math.min(gold.length, usd.length);
-
-    if(minLen >= 60){
-      // Normal: altın ve USD/TRY pozitif korelasyon (TRY zayıflarsa her ikisi de TRY'de artar)
-      const corr12m = pearsonCorr(
-        dailyReturns(gold.slice(-Math.min(250,minLen))),
-        dailyReturns(usd.slice(-Math.min(250,minLen)))
-      );
-      const corr30d = pearsonCorr(
-        dailyReturns(gold.slice(-31)),
-        dailyReturns(usd.slice(-31))
-      );
-
-      ANALYTICS.correlationBreak = { corr12m, corr30d };
-
-      let signal, summary, detail;
-
-      if(corr12m !== null && corr30d !== null){
-        const corrDiff = corr30d - corr12m;
-
-        if(corr30d < 0.2 && corr12m > 0.5){
-          // Korelasyon kırıldı — altın USD'den bağımsız hareket ediyor
-          signal = 'danger';
-          summary = L()==='en'
-            ? `🔴 Correlation break detected — Gold decoupling from USD/TRY`
-            : `🔴 Korelasyon kırılması tespit edildi — Altın USD/TRY'den ayrışıyor`;
-          detail = L()==='en'
-            ? `12-month Gold/USDTRY correlation: <strong>${corr12m.toFixed(2)}</strong>. Recent 30-day correlation: <strong>${corr30d.toFixed(2)}</strong>. When gold decouples from USD/TRY (normally highly correlated in Turkish markets), it signals a <strong>global risk-off event</strong> — investors buying gold as a safe haven independently of TRY weakness. <strong>Signal: Risk-off environment. Add capital protection layer. Avoid high-risk TL carry. Add gold or USD DPM.</strong>`
-            : `12 aylık Altın/USDTRY korelasyonu: <strong>${corr12m.toFixed(2)}</strong>. Son 30 günlük korelasyon: <strong>${corr30d.toFixed(2)}</strong>. Altın USD/TRY'den ayrıştığında (Türk piyasalarında normalde yüksek korelasyonlu), <strong>global risk-off olayı</strong> sinyali verir — yatırımcılar TRY zayıflığından bağımsız olarak güvenli liman olarak altın alıyor. <strong>Sinyal: Risk-off ortam. Sermaye koruma katmanı ekle. Yüksek riskli TL carry'den kaçın. Altın veya USD DPM ekle.</strong>`;
-        } else if(corr30d > 0.7 && corr12m < 0.4){
-          // Korelasyon aniden arttı — TRY baskısı
-          signal = 'warning';
-          summary = L()==='en'
-            ? `🟡 Gold-USD/TRY correlation spiking — TRY under pressure`
-            : `🟡 Altın-USD/TRY korelasyonu ani yükseliş — TRY baskı altında`;
-          detail = L()==='en'
-            ? `Correlation jumped from ${corr12m.toFixed(2)} (12m) to ${corr30d.toFixed(2)} (30d). Gold and USD/TRY moving together strongly suggests TRY-specific pressure (both USD and gold expensive in TRY). <strong>Signal: TRY depreciation risk elevated. Consider FX hedge.</strong>`
-            : `Korelasyon ${corr12m.toFixed(2)} (12ay)'den ${corr30d.toFixed(2)} (30g)'ye atladı. Altın ve USD/TRY'nin birlikte güçlü hareketi TRY'ye özgü baskıyı işaret eder (hem USD hem altın TRY cinsinden pahalı). <strong>Sinyal: TRY değer kaybı riski yüksek. FX hedge düşünün.</strong>`;
-        } else {
-          signal = 'neutral';
-          summary = L()==='en'
-            ? `⚪ Gold/USD correlation normal — 12m: ${corr12m?.toFixed(2)||'—'}, 30d: ${corr30d?.toFixed(2)||'—'}`
-            : `⚪ Altın/USD korelasyonu normal — 12ay: ${corr12m?.toFixed(2)||'—'}, 30g: ${corr30d?.toFixed(2)||'—'}`;
-          detail = L()==='en'
-            ? `No structural correlation break detected. Markets behaving within normal regimes.`
-            : `Yapısal korelasyon kırılması tespit edilmedi. Piyasalar normal rejim içinde davranıyor.`;
-        }
-        results.push({ model:'🔗 Model 4 — Altın/USD Korelasyon Kırılması', signal, summary, detail });
-      }
-    }
-  }
-
-  // ── MASTER SİNYAL — tüm modelleri birleştir ──
-  {
-    const scores = { positive:2, neutral:0, warning:-1, danger:-2 };
-    const totalScore = results.reduce((s,r)=>s+(scores[r.signal]||0),0);
-    const macroScore = MACRO_STATE.signal === 'TL_STRONG' ? 3 : MACRO_STATE.signal === 'TL_WEAK' ? -3 : 0;
-    const masterScore = totalScore + macroScore;
-
-    let masterSignal, masterText;
-    if(masterScore >= 4){
-      masterSignal = 'positive';
-      masterText = L()==='en'
-        ? `🏆 MASTER SIGNAL: STRONG TL CARRY (score: +${masterScore}) — All models aligned for carry trade. Recommend Growth/Carry Maximizer scenario.`
-        : `🏆 MASTER SİNYAL: GÜÇLÜ TL CARRY (skor: +${masterScore}) — Tüm modeller carry trade için hizalandı. Büyüme/Carry Maksimizasyonu senaryosu önerilir.`;
-    } else if(masterScore >= 1){
-      masterSignal = 'neutral';
-      masterText = L()==='en'
-        ? `⚖️ MASTER SIGNAL: BALANCED (score: +${masterScore}) — Mixed signals. Recommend Balanced scenario with moderate TL allocation.`
-        : `⚖️ MASTER SİNYAL: DENGELİ (skor: +${masterScore}) — Karma sinyaller. Orta TL alokasyonlu Dengeli senaryo önerilir.`;
-    } else if(masterScore >= -2){
-      masterSignal = 'warning';
-      masterText = L()==='en'
-        ? `⚠️ MASTER SIGNAL: DEFENSIVE (score: ${masterScore}) — Multiple risk signals. Recommend FX Hedge scenario.`
-        : `⚠️ MASTER SİNYAL: SAVUNMACI (skor: ${masterScore}) — Çoklu risk sinyalleri. FX Hedge senaryosu önerilir.`;
-    } else {
-      masterSignal = 'danger';
-      masterText = L()==='en'
-        ? `🛡️ MASTER SIGNAL: PROTECTION MODE (score: ${masterScore}) — Strong risk-off signals. Recommend Capital Protection scenario.`
-        : `🛡️ MASTER SİNYAL: KORUMA MODU (skor: ${masterScore}) — Güçlü risk-off sinyalleri. Sermaye Koruma senaryosu önerilir.`;
-    }
-
-    ANALYTICS.masterScore = masterScore;
-    ANALYTICS.masterSignal = masterSignal;
-    results.unshift({ model:'🎯 MASTER SİNYAL', signal: masterSignal, summary: masterText, detail:'', isMaster: true });
-  }
-
-  renderAnalyticsResults(results);
-
-  // Senaryo öneriyi güncelle
-  updateScenarioInsightBar();
-}
-
-function renderAnalyticsResults(results){
-  const container = document.getElementById('analytics_results');
-  if(!container) return;
-
-  const colors = {
-    positive: { bg:'rgba(74,222,128,.12)', border:'#4ade80', text:'#166534' },
-    neutral:  { bg:'rgba(255,255,255,.06)', border:'rgba(255,255,255,.15)', text:'rgba(184,208,240,.8)' },
-    warning:  { bg:'rgba(251,191,36,.12)', border:'#fbbf24', text:'#92400e' },
-    danger:   { bg:'rgba(248,113,113,.12)', border:'#f87171', text:'#7f1d1d' }
-  };
-
-  container.innerHTML = results.map(r => {
-    const c = colors[r.signal] || colors.neutral;
-    return `
-      <div style="background:${c.bg};border:1px solid ${c.border};border-radius:12px;padding:14px 16px;margin-bottom:10px;${r.isMaster?'border-width:2px;':''}" >
-        <div style="font-size:10px;font-weight:700;color:rgba(184,208,240,.5);letter-spacing:.8px;text-transform:uppercase;margin-bottom:6px;">${r.model}</div>
-        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:${r.detail?'8px':'0'};">${r.summary}</div>
-        ${r.detail ? `<div style="font-size:12px;color:rgba(184,208,240,.8);line-height:1.5;">${r.detail}</div>` : ''}
-      </div>
-    `;
-  }).join('');
-}
-
-// Override suggestBestScenario with full analytics
-function suggestBestScenario(){
-  updateScenarioInsightBar();
-
-  const ctx = getMarketContext();
-  let best = 'balanced';
-
-  // NET CARRY (FX sonrası) her zaman birincil karar kriteri
-  // Analytics/Macro sinyal ikincil — sadece net carry sınır bölgesindeyse devreye girer
-  const netCarry = ctx.netCarryTL_vsUSD;
-  const grossCarry = ctx.carryVsUSD;
-
-  if(ctx.principalCcy === 'USD'){
-    if(netCarry > 15){
-      // Net carry çok güçlü → carry trade kesin mantıklı
-      best = 'growth';
-    } else if(netCarry > 5){
-      // Net carry pozitif ama orta → analytics sinyali tie-breaker
-      if(ANALYTICS.masterSignal === 'positive' || MACRO_STATE.signal === 'TL_STRONG') best = 'growth';
-      else best = 'balanced';
-    } else if(netCarry > 0){
-      // Net carry pozitif ama zayıf → dengeli
-      best = 'balanced';
-    } else if(netCarry > -10){
-      // Net carry hafif negatif → FX hedge
-      best = 'fxhedge';
-    } else {
-      // Net carry ciddi negatif → koruma
-      best = 'protection';
-    }
-  } else if(ctx.principalCcy === 'TL'){
-    // TL müşteri: FX beklentisi var mı?
-    const fxRisk = ctx.fxMoveUSD; // beklenen USD/TRY yıllık artış %
-    if(fxRisk > grossCarry * 0.8){
-      best = 'protection'; // TL hızla değer kaybedebilir
-    } else if(fxRisk > grossCarry * 0.5){
-      best = 'balanced';
-    } else {
-      best = 'growth'; // TL'de kal, tam getiri
-    }
-  } else if(ctx.principalCcy === 'EUR'){
-    const netCarryEUR = ctx.netCarryTL_vsEUR;
-    if(netCarryEUR > 10) best = 'growth';
-    else if(netCarryEUR > 0) best = 'balanced';
-    else best = 'fxhedge';
-  } else {
-    // Altın — varsayılan dengeli
-    best = 'balanced';
-  }
-
-  openScenarioModal(best);
-}
-
-// Wire analytics buttons
-document.getElementById('btn_fetch_analytics')?.addEventListener('click', fetchHistoricalData);
-document.getElementById('btn_run_models')?.addEventListener('click', runAllModels);
-
-function toggleAnalytics(){
-  const body = document.getElementById('analytics_body');
-  const arrow = document.getElementById('analytics_arrow');
-  const isOpen = body.style.display !== 'none';
-  body.style.display = isOpen ? 'none' : 'block';
-  arrow.classList.toggle('open', !isOpen);
-}
 
 // Also do same for macro panel — make it collapsible
 function toggleMacro(){
@@ -2964,9 +2792,791 @@ function applyRenew(id){
   }
   syncRenewVisibility(id);
   // Hesabı tetikle
-  const calcBtn = document.getElementById('btn_calc');
+  const calcBtn = document.getElementById('btn_calc') || document.querySelector('.btn-primary[onclick*="calc"]');
   if(calcBtn) calcBtn.click();
+  else {
+    // Try to trigger calc directly
+    try { calc(); } catch(e) {}
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   PAGE NAVIGATION
+══════════════════════════════════════════════════════════ */
+function switchPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const pageEl = document.getElementById('page-' + page);
+  const navEl  = document.getElementById('nav-' + page);
+  if(pageEl) pageEl.classList.add('active');
+  if(navEl)  navEl.classList.add('active');
+  if(page === 'pt'){
+    // Simülatör kurlarını portföy sayfasına taşı
+    const usd  = document.getElementById('usdtry')?.value;
+    const eur  = document.getElementById('eurtry')?.value;
+    const gold = document.getElementById('xautry_g')?.value;
+    if(usd  && document.getElementById('pt-rate-usd'))  document.getElementById('pt-rate-usd').textContent  = Number(usd).toFixed(2);
+    if(eur  && document.getElementById('pt-rate-eur'))  document.getElementById('pt-rate-eur').textContent  = Number(eur).toFixed(2);
+    if(gold && document.getElementById('pt-rate-gold')) document.getElementById('pt-rate-gold').textContent = Number(gold).toFixed(2);
+    renderPortfolioPage();
+  }
+  window.scrollTo(0, 0);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PORTFOLIO TRACKER — DATA LAYER (localStorage)
+══════════════════════════════════════════════════════════ */
+const PT_KEY = 'pb_portfolio_clients_v1';
+
+function ptLoad() {
+  try { return JSON.parse(localStorage.getItem(PT_KEY) || '[]'); }
+  catch(e) { return []; }
+}
+function ptSave(clients) {
+  localStorage.setItem(PT_KEY, JSON.stringify(clients));
+}
+function ptGenId() {
+  return 'c' + Date.now() + Math.random().toString(36).slice(2,6);
+}
+
+/* ══════════════════════════════════════════════════════════
+   PORTFOLIO CALC ENGINE
+══════════════════════════════════════════════════════════ */
+const PT_PRODUCTS = ['Vadeli Mevduat', 'Yatırım Fonu', 'Sukuk', 'DPM', 'Eurobond', 'Diğer'];
+const PT_CCYS    = ['USD', 'TL', 'EUR', 'XAUg'];
+
+// Günlük elapsed days
+function elapsedDays(dateStr) {
+  const start = new Date(dateStr);
+  const now   = new Date();
+  return Math.max(0, Math.round((now - start) / 86400000));
+}
+
+// Basit faiz FV
+function ptFV(principal, annualPct, days, taxPct) {
+  const gross = principal * (1 + (annualPct/100) * (days/365));
+  const gain  = gross - principal;
+  const tax   = gain * (taxPct/100);
+  return { gross, net: gross - tax, tax, gain, gainNet: gain - tax };
+}
+
+// Spot kurları al (hesaplama anındaki mevcut kurlar)
+function ptGetCurrentRates() {
+  // Simülatör sayfasından çek (zaten fetch edilmiş olabilir)
+  const usdtry = Number(document.getElementById('usdtry')?.value) || 0;
+  const eurtry = Number(document.getElementById('eurtry')?.value) || 0;
+  const goldtry = Number(document.getElementById('goldtry')?.value) || 0;
+  return { usdtry, eurtry, goldtry };
+}
+
+// Bir müşteriyi hesapla
+function ptCalcClient(client) {
+  const rates = ptGetCurrentRates();
+  const days  = elapsedDays(client.date);
+  const allocs = client.allocs || [];
+
+  let totalStartTRY = 0;
+  let totalEndTRY   = 0;
+  let totalTaxTRY   = 0;
+
+  // Giriş ana para TRY bazında
+  function toTRY(amount, ccy, usdtryRate) {
+    const r = usdtryRate || rates.usdtry || 1;
+    if(ccy === 'TL')    return amount;
+    if(ccy === 'USD')   return amount * r;
+    if(ccy === 'EUR')   return amount * (rates.eurtry || r * 1.08);
+    if(ccy === 'XAUg')  return amount * (rates.goldtry || r * 2.2);
+    return amount;
+  }
+
+  const entryRate = client.usdtry || rates.usdtry || 1;
+
+  const rowResults = allocs.map(a => {
+    // Tutar: yüzde veya mutlak
+    const pct    = Number(a.pct) || 0;
+    const amt    = Number(a.amt) || 0;
+    const total  = Number(client.amount) || 0;
+    const principal = pct > 0 ? total * pct / 100 : (amt > 0 ? amt : total);
+
+    const fv = ptFV(principal, Number(a.rate)||0, days, Number(a.tax)||0);
+
+    // TRY bazında başlangıç ve bitiş
+    const startTRY = toTRY(principal, a.ccy, entryRate);
+    const endTRY   = toTRY(fv.net,   a.ccy, rates.usdtry || entryRate);
+    const taxTRY   = toTRY(fv.tax,   a.ccy, rates.usdtry || entryRate);
+
+    totalStartTRY += startTRY;
+    totalEndTRY   += endTRY;
+    totalTaxTRY   += taxTRY;
+
+    return { ...a, principal, fv, startTRY, endTRY, taxTRY };
+  });
+
+  const plTRY = totalEndTRY - totalStartTRY;
+
+  // P/L giriş para biriminde
+  let plPrincipal = 0;
+  const ccy = client.ccy;
+  if(ccy === 'TL')   plPrincipal = plTRY;
+  else if(ccy === 'USD') plPrincipal = plTRY / (rates.usdtry || entryRate);
+  else if(ccy === 'EUR') plPrincipal = plTRY / (rates.eurtry || entryRate * 1.08);
+  else if(ccy === 'XAUg') plPrincipal = plTRY / (rates.goldtry || entryRate * 2.2);
+
+  const plPct = totalStartTRY > 0 ? (plTRY / totalStartTRY * 100) : 0;
+
+  // Break-even FX: vade sonunda USD bazında başa baş olan USD/TRY kuru
+  // plPrincipal = 0 → breakEvenFX
+  // endTRY / entryRate = amount → endTRY = amount * entryRate
+  // break-even = totalEndTRY / client.amount (for USD client)
+  const breakEvenFX = (ccy === 'USD' && (client.amount||0) > 0)
+    ? totalEndTRY / (client.amount || 1)
+    : 0;
+
+  // Per-currency P/L
+  const plUSD = rates.usdtry > 0 ? plTRY / rates.usdtry : null;
+  const plTL  = plTRY;
+
+  return { days, rowResults, plTRY, plPrincipal, plPct, totalStartTRY, totalEndTRY, totalTaxTRY, breakEvenFX, plUSD, plTL };
+}
+
+/* ══════════════════════════════════════════════════════════
+   RENDER
+══════════════════════════════════════════════════════════ */
+function fmtPT(n, ccy) {
+  if(!isFinite(n)) return '—';
+  const abs = Math.abs(n);
+  const sign = n < 0 ? '-' : n > 0 ? '+' : '';
+  let str;
+  if(abs >= 1e6) str = (abs/1e6).toFixed(2) + 'M';
+  else if(abs >= 1e3) str = (abs/1e3).toFixed(1) + 'K';
+  else str = abs.toFixed(2);
+  return sign + str + (ccy ? ' ' + ccy : '');
+}
+
+function renderPortfolioPage() {
+  const clients = ptLoad();
+  const list = document.getElementById('pt-client-list');
+  if(!list) return;
+
+  // KPI summary
+  let totalAUM = 0, totalPL = 0, countActive = 0;
+  clients.forEach(cl => {
+    const res = ptCalcClient(cl);
+    totalAUM += cl.amount || 0;
+    totalPL  += res.plPrincipal;
+    countActive++;
+  });
+
+  document.getElementById('pt-aum').textContent   = fmtPT(totalAUM, '');
+  document.getElementById('pt-count').textContent = countActive;
+  const plEl  = document.getElementById('pt-pl');
+  const kpiEl = document.getElementById('pt-kpi-pl');
+  plEl.textContent = fmtPT(totalPL, '');
+  kpiEl.className  = 'pt-kpi ' + (totalPL > 0 ? 'green' : totalPL < 0 ? 'red' : '');
+
+  if(!clients.length) {
+    list.innerHTML = `<div style="text-align:center;padding:40px 20px;color:var(--text-muted);">
+      <div style="font-size:40px;margin-bottom:12px;">📋</div>
+      <div style="font-size:14px;font-weight:600;">Henüz müşteri yok</div>
+      <div style="font-size:12px;margin-top:4px;">Müşteri Ekle butonuna bas</div>
+    </div>`;
+    return;
+  }
+
+  list.innerHTML = clients.map((cl, idx) => {
+    const res = ptCalcClient(cl);
+    const plClass = res.plPrincipal > 0 ? 'pos' : res.plPrincipal < 0 ? 'neg' : 'neu';
+    const daysBadge = res.days >= (cl.tenor||999)
+      ? `<span class="days-badge matured">Vade Doldu</span>`
+      : `<span class="days-badge running">${res.days} gün</span>`;
+
+    const rowsHTML = res.rowResults.map(r => `
+      <tr>
+        <td>${r.prod || '—'}</td>
+        <td>${r.ccy}</td>
+        <td>${fmtPT(r.principal, '')}</td>
+        <td>${Number(r.rate||0).toFixed(1)}%</td>
+        <td>${fmtPT(r.fv.net, '')}</td>
+        <td class="${r.fv.gainNet >= 0 ? 'pl-pos' : 'pl-neg'}">${fmtPT(r.fv.gainNet, '')}</td>
+        <td>${fmtPT(r.fv.tax, '')}</td>
+      </tr>`).join('');
+
+    return `
+    <div class="client-card" id="cc-${cl.id}">
+      <div class="cc-header" onclick="toggleClientCard('${cl.id}')">
+        <div>
+          <div class="cc-name">${cl.name}</div>
+          <div class="cc-meta">${cl.date} · ${cl.amount?.toLocaleString('tr-TR')} ${cl.ccy} · ${daysBadge}</div>
+        </div>
+        <div>
+          <div class="cc-pl ${plClass}">${fmtPT(res.plPrincipal, cl.ccy)}</div>
+          <div class="cc-pl-sub">${res.plPct >= 0 ? '+' : ''}${res.plPct.toFixed(2)}% getiri</div>
+        </div>
+      </div>
+      <div class="cc-body" id="cc-body-${cl.id}">
+        <table class="cc-alloc-table">
+          <thead><tr>
+            <th>Ürün</th><th>PB</th><th>Anapara</th><th>Faiz</th>
+            <th>Vade Sonu</th><th>Net Kazanç</th><th>Stopaj</th>
+          </tr></thead>
+          <tbody>${rowsHTML}</tbody>
+        </table>
+        <div style="margin-top:10px;padding:10px 12px;background:var(--surface-2);border-radius:10px;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;">
+          <div><span style="color:var(--text-muted);">Başlangıç (TRY): </span><strong>${fmtPT(res.totalStartTRY, 'TL')}</strong></div>
+          <div><span style="color:var(--text-muted);">Güncel Değer (TRY): </span><strong>${fmtPT(res.totalEndTRY, 'TL')}</strong></div>
+          <div><span style="color:var(--text-muted);">P/L (TL): </span><strong style="color:${res.plTL>=0?'var(--success)':'var(--danger)'};">${fmtPT(res.plTL,'TL')}</strong></div>
+          <div><span style="color:var(--text-muted);">P/L (USD): </span><strong style="color:${(res.plUSD||0)>=0?'var(--success)':'var(--danger)'};">${res.plUSD!=null?fmtPT(res.plUSD,'USD'):'—'}</strong></div>
+          <div><span style="color:var(--text-muted);">Toplam Stopaj: </span><strong>${fmtPT(res.totalTaxTRY,'TL')}</strong></div>
+          <div><span style="color:var(--text-muted);">Geçen Süre: </span><strong>${res.days} gün</strong></div>
+          ${res.breakEvenFX > 0 ? `<div style="grid-column:1/-1;margin-top:4px;padding:6px 10px;background:rgba(232,184,58,.08);border:1px solid rgba(232,184,58,.2);border-radius:8px;color:var(--gold-600);font-weight:600;">⚖️ USD bazında başa baş USD/TRY: <strong>${res.breakEvenFX.toFixed(4)}</strong> — bu kurun üzerinde USD bazlı zarar başlar</div>` : ''}
+        </div>
+        <div class="cc-action-row">
+          <button class="btn btn-ghost btn-sm" onclick="editClient('${cl.id}')">✏️ Düzenle</button>
+          <button class="btn btn-gold btn-sm" onclick="ptRefreshRates('${cl.id}')">🔄 Kurları Güncelle</button>
+          <button class="btn btn-sm" style="background:rgba(155,28,28,.08);border:1px solid rgba(155,28,28,.2);color:var(--danger);" onclick="deleteClient('${cl.id}')">🗑 Sil</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleClientCard(id) {
+  const body = document.getElementById('cc-body-' + id);
+  const card = document.getElementById('cc-' + id);
+  if(!body) return;
+  const open = body.classList.toggle('open');
+  card.classList.toggle('expanded', open);
+}
+
+/* ══════════════════════════════════════════════════════════
+   MODAL — ADD / EDIT CLIENT
+══════════════════════════════════════════════════════════ */
+let ptAllocCounter = 0;
+
+function openAddClientModal(editData) {
+  ptAllocCounter = 0;
+  document.getElementById('pt-alloc-rows').innerHTML = '';
+  document.getElementById('pt-edit-id').value = editData?.id || '';
+  document.getElementById('pt-modal-title-txt').textContent = editData ? 'Müşteriyi Düzenle' : 'Müşteri Ekle';
+  document.getElementById('pt-name').value   = editData?.name   || '';
+  document.getElementById('pt-date').value   = editData?.date   || new Date().toISOString().split('T')[0];
+  document.getElementById('pt-amount').value = editData?.amount || '';
+  document.getElementById('pt-ccy').value    = editData?.ccy    || 'USD';
+  document.getElementById('pt-usdtry').value = editData?.usdtry || (document.getElementById('usdtry')?.value || '');
+
+  // Pre-fill alloc rows
+  const allocs = editData?.allocs || [{}];
+  allocs.forEach(a => ptAddAllocRow(a));
+
+  document.getElementById('pt-modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAddClientModal() {
+  document.getElementById('pt-modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleModalOverlayClick(e) {
+  if(e.target === document.getElementById('pt-modal-overlay')) closeAddClientModal();
+}
+
+function ptToggleAllocMode(){
+  const isPct = document.getElementById('pt-mode-pct').checked;
+  const hdr = document.getElementById('pt-alloc-hdr');
+  if(hdr) hdr.textContent = isPct ? 'Tutar(%)' : 'Tutar';
+  document.querySelectorAll('[id^="pt-apct-"]').forEach(el => {
+    el.placeholder = isPct ? '%' : 'Tutar';
+    el.step = isPct ? '1' : '1000';
+  });
+}
+
+function ptFetchRate(){
+  const spot = document.getElementById('usdtry')?.value;
+  if(spot) document.getElementById('pt-usdtry').value = spot;
+  else alert('Önce Simülatör sayfasında kurları çekin.');
+}
+
+function ptAddAllocRow(preset) {
+  const id = ++ptAllocCounter;
+  const isPct = document.getElementById('pt-mode-pct')?.checked !== false;
+  const prodOpts = PT_PRODUCTS.map(p => `<option ${preset?.prod===p?'selected':''}>${p}</option>`).join('');
+  const ccyOpts  = PT_CCYS.map(cc => `<option ${preset?.ccy===cc?'selected':''}>${cc}</option>`).join('');
+  const allocVal = preset?.pct || preset?.amt || '';
+  const row = document.createElement('div');
+  row.className = 'pt-alloc-row';
+  row.id = 'pt-ar-' + id;
+  row.innerHTML = `
+    <select id="pt-aprod-${id}" style="font-size:11px;">${prodOpts}</select>
+    <select id="pt-accy-${id}" style="font-size:11px;">${ccyOpts}</select>
+    <input type="number" id="pt-apct-${id}" placeholder="${isPct?'%':'Tutar'}" step="${isPct?'1':'1000'}" value="${allocVal}">
+    <input type="number" id="pt-arate-${id}" placeholder="%" step="0.1" value="${preset?.rate||''}">
+    <input type="number" id="pt-atax-${id}" placeholder="%" step="0.1" value="${preset?.tax??'0'}">
+    <button type="button" class="pt-alloc-del" onclick="document.getElementById('pt-ar-${id}').remove()">×</button>
+  `;
+  document.getElementById('pt-alloc-rows').appendChild(row);
+}
+
+function saveClient() {
+  const name   = document.getElementById('pt-name').value.trim();
+  const date   = document.getElementById('pt-date').value;
+  const amount = Number(document.getElementById('pt-amount').value);
+  const ccy    = document.getElementById('pt-ccy').value;
+  const usdtry = Number(document.getElementById('pt-usdtry').value);
+  const editId = document.getElementById('pt-edit-id').value;
+
+  if(!name) { alert('Müşteri adı giriniz.'); return; }
+  if(!date || !amount) { alert('Tarih ve tutar zorunludur.'); return; }
+
+  // Collect alloc rows
+  const isPct = document.getElementById('pt-mode-pct')?.checked !== false;
+  const allocs = [];
+  document.querySelectorAll('[id^="pt-ar-"]').forEach(row => {
+    const rid = row.id.replace('pt-ar-', '');
+    const prod  = document.getElementById('pt-aprod-' + rid)?.value;
+    const accy  = document.getElementById('pt-accy-'  + rid)?.value;
+    const val   = Number(document.getElementById('pt-apct-'  + rid)?.value) || 0;
+    const rate  = Number(document.getElementById('pt-arate-' + rid)?.value) || 0;
+    const tax   = Number(document.getElementById('pt-atax-'  + rid)?.value) || 0;
+    if(prod) allocs.push({ prod, ccy: accy, pct: isPct ? val : 0, amt: isPct ? 0 : val, rate, tax });
+  });
+
+  if(!allocs.length) { alert('En az bir ürün ekleyiniz.'); return; }
+
+  const clients = ptLoad();
+  if(editId) {
+    const idx = clients.findIndex(c => c.id === editId);
+    if(idx >= 0) clients[idx] = { ...clients[idx], name, date, amount, ccy, usdtry, allocs, allocMode: isPct?'pct':'amt' };
+  } else {
+    clients.push({ id: ptGenId(), name, date, amount, ccy, usdtry, allocs, allocMode: isPct?'pct':'amt' });
+  }
+  ptSave(clients);
+  closeAddClientModal();
+  renderPortfolioPage();
+}
+
+function editClient(id) {
+  const clients = ptLoad();
+  const cl = clients.find(c => c.id === id);
+  if(cl) openAddClientModal(cl);
+}
+
+function deleteClient(id) {
+  if(!confirm('Bu müşteriyi silmek istediğinizden emin misiniz?')) return;
+  const clients = ptLoad().filter(c => c.id !== id);
+  ptSave(clients);
+  renderPortfolioPage();
+}
+
+function ptRefreshRates(id) {
+  // Simülatör sayfasındaki kurları yenile, sonra render et
+  const fetchBtn = document.getElementById('btn_fetch');
+  if(fetchBtn) {
+    fetchBtn.click();
+    setTimeout(() => renderPortfolioPage(), 2000);
+  } else {
+    renderPortfolioPage();
+  }
+}
+
+/* ══ PWA Service Worker kaydı ══ */
+// Service Worker: Safari blob: URL desteklemiyor, kaldırıldı
+
+/* ── ptFetchLiveRates: portfolio page'de canlı kur çek ── */
+async function ptFetchLiveRates(){
+  try {
+    const r = await fetch('https://finans.truncgil.com/v4/today.json', {cache:'no-store'});
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const d = await r.json();
+    const usd  = Number(d?.USD?.Selling || d?.USD?.Buying || 0);
+    const eur  = Number(d?.EUR?.Selling || d?.EUR?.Buying || 0);
+    const gold = Number(d?.GRA?.Selling || d?.GRA?.Buying || 0);
+
+    if(usd > 0){
+      // Simülatör sayfasına da yaz
+      const uEl = document.getElementById('usdtry');
+      if(uEl && !uEl.value) uEl.value = usd.toFixed(4);
+    }
+    if(eur > 0){
+      const eEl = document.getElementById('eurtry');
+      if(eEl && !eEl.value) eEl.value = eur.toFixed(4);
+    }
+    if(gold > 0){
+      const gEl = document.getElementById('goldtry');
+      if(gEl && !gEl.value) gEl.value = gold.toFixed(4);
+    }
+
+    // Portfolio page rates bar
+    if(usd>0)  document.getElementById('pt-rate-usd').textContent  = usd.toFixed(2);
+    if(eur>0)  document.getElementById('pt-rate-eur').textContent  = eur.toFixed(2);
+    if(gold>0) document.getElementById('pt-rate-gold').textContent = gold.toFixed(2);
+
+    // Re-render with new rates
+    renderPortfolioPage();
+  } catch(e) {
+    // Fallback
+    try {
+      const r2 = await fetch('https://open.er-api.com/v6/latest/USD');
+      const d2 = await r2.json();
+      const usd2 = 1;
+      const tryRate = d2?.rates?.TRY || 0;
+      if(tryRate > 0){
+        document.getElementById('pt-rate-usd').textContent = tryRate.toFixed(2);
+        const uEl = document.getElementById('usdtry');
+        if(uEl && !uEl.value) uEl.value = tryRate.toFixed(4);
+        renderPortfolioPage();
+      }
+    } catch(e2){}
+  }
+}
+
+/* ── Auto-update rates bar when portfolio page is opened ── */
+// switchPage rates update merged into main switchPage
+// end of main JS
+
+
+
+// Reset product rates table when global rates change
+['rtl','rusd','reur'].forEach(id => {
+  document.getElementById(id)?.addEventListener('input', ()=>{
+    const grid = document.getElementById('product-rates-grid');
+    if(grid && grid.style.display !== 'none') initProductRatesTable();
+  });
+});
+
+// Reset prod rates on resetAll
+
+
+/* ═══════════════════════════════════════
+   ÜRÜN BAZLI GETİRİ SİSTEMİ
+═══════════════════════════════════════ */
+
+var PROD_RATE_STORE = {
+  TERM_TL: '', TERM_USD: '', TERM_EUR: '', TERM_XAUg: '',
+  FUND_TL: '', FUND_USD: '', FUND_EUR: '', FUND_XAUg: '',
+  SUKUK_TL: '', SUKUK_USD: '', SUKUK_EUR: '', SUKUK_XAUg: '',
+  DPM_TL: '', DPM_USD: '', DPM_EUR: ''
+};
+
+function getProdRate(prod, ccy) {
+  var key = prod + '_' + ccy;
+  var stored = PROD_RATE_STORE[key];
+  if (stored !== '' && stored !== null && stored !== undefined) {
+    var n = Number(stored);
+    if (n > 0) return n;
+  }
+  var rTL  = Number(document.getElementById('rtl')  ? document.getElementById('rtl').value  : 0) || 45;
+  var rUSD = Number(document.getElementById('rusd') ? document.getElementById('rusd').value : 0) || 5;
+  var rEUR = Number(document.getElementById('reur') ? document.getElementById('reur').value : 0) || 3;
+  if (ccy === 'TL')   return rTL;
+  if (ccy === 'USD')  return rUSD;
+  if (ccy === 'EUR')  return rEUR;
+  if (ccy === 'XAUg') return 0;
+  return 0;
+}
+
+function setProdRate(key, val) {
+  PROD_RATE_STORE[key] = val;
+}
+
+function toggleProductRates() {
+  var grid = document.getElementById('product-rates-grid');
+  var btn  = document.getElementById('btn_prod_rates');
+  if (!grid) return;
+  var isHidden = grid.style.display === 'none' || grid.style.display === '';
+  grid.style.display = isHidden ? 'block' : 'none';
+  if (btn) btn.textContent = isHidden ? 'Ürün Bazlı ▲' : 'Ürün Bazlı ▼';
+  if (isHidden) buildProductRatesTable();
+}
+
+function buildProductRatesTable() {
+  var tbody = document.getElementById('prod-rates-tbody');
+  if (!tbody) return;
+  var rTL  = Number(document.getElementById('rtl')  ? document.getElementById('rtl').value  : 45) || 45;
+  var rUSD = Number(document.getElementById('rusd') ? document.getElementById('rusd').value : 5)  || 5;
+  var rEUR = Number(document.getElementById('reur') ? document.getElementById('reur').value : 3)  || 3;
+
+  var products = [
+    { key: 'TERM',  label: 'Vadeli Mevduat', ccys: ['TL','USD','EUR','XAUg'],
+      defs: { TL: rTL, USD: rUSD, EUR: rEUR, XAUg: 0 } },
+    { key: 'FUND',  label: 'Yatırım Fonu',   ccys: ['TL','USD','EUR','XAUg'],
+      defs: { TL: rTL, USD: rUSD, EUR: rEUR, XAUg: 0 } },
+    { key: 'SUKUK', label: 'Sukuk',           ccys: ['TL','USD','EUR','XAUg'],
+      defs: { TL: Math.max(rTL-7,25), USD: Math.max(rUSD+2,5), EUR: Math.max(rEUR+3,4), XAUg: 3 } },
+    { key: 'DPM',   label: 'DPM',             ccys: ['TL','USD','EUR'],
+      defs: { TL: rTL, USD: 12, EUR: 8 } }
+  ];
+
+  var html = '';
+  for (var pi = 0; pi < products.length; pi++) {
+    var p = products[pi];
+    html += '<tr>';
+    html += '<td style="padding:5px 8px;font-weight:600;color:var(--text-primary);font-size:12px;white-space:nowrap;">' + p.label + '</td>';
+    var allCcys = ['TL','USD','EUR','XAUg'];
+    for (var ci = 0; ci < allCcys.length; ci++) {
+      var ccy = allCcys[ci];
+      var storeKey = p.key + '_' + ccy;
+      if (p.ccys.indexOf(ccy) >= 0) {
+        var ph = p.defs[ccy] !== undefined ? String(p.defs[ccy]) : '';
+        var stored = PROD_RATE_STORE[storeKey] || '';
+        var inputId = 'pr_input_' + p.key + '_' + ccy;
+        html += '<td style="padding:4px 5px;">';
+        html += '<input type="number" id="' + inputId + '"';
+        html += ' data-key="' + storeKey + '"';
+        html += ' step="0.1" min="0" max="100"';
+        html += ' placeholder="' + ph + '"';
+        html += ' value="' + stored + '"';
+        html += ' style="width:58px;padding:5px 4px;font-size:12px;border:1px solid var(--border-mid);border-radius:6px;background:var(--surface-1);color:var(--text-primary);font-family:inherit;"';
+        html += ' onchange="setProdRate(this.dataset.key, this.value)">';
+        html += '</td>';
+      } else {
+        html += '<td style="padding:4px 5px;text-align:center;color:var(--text-light);font-size:11px;">—</td>';
+      }
+    }
+    html += '</tr>';
+  }
+  tbody.innerHTML = html;
+}
+
+// Rebuild table when global rates change
+function bindProdRateListeners() {
+  ['rtl','rusd','reur'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.addEventListener('input', function() {
+        var grid = document.getElementById('product-rates-grid');
+        if (grid && grid.style.display === 'block') buildProductRatesTable();
+      });
+    }
+  });
+}
+bindProdRateListeners();
+
+
+/* ═══════════════════════════════════════════════════════
+   SENARYO ÖNERİ — Tüm senaryoları simüle et, en iyiyi seç
+═══════════════════════════════════════════════════════ */
+function suggestBestScenario(){
+  updateScenarioInsightBar();
+  var ctx = getMarketContext();
+  var principalAmt = parseAmount(document.getElementById('total_amount').value) || 0;
+  var principalCcy = ctx.principalCcy;
+  var days = ctx.days;
+  var Tt = days / 365;
+
+  // Her senaryoyu simüle et — principalCcy bazında net değer
+  function simScenario(weights){
+    if(!principalAmt || principalAmt <= 0) return 0;
+    var total = 0;
+    for(var i=0; i<weights.length; i++){
+      var w = weights[i];
+      var amt = principalAmt * w.w;
+      var r1 = fxRate(principalCcy, w.ccy, 'start');
+      if(r1 === null) continue;
+      var P = amt * r1;
+      var rate = (typeof getProdRate === 'function') ? (getProdRate(w.prod, w.ccy) || w.rate || 0) : (w.rate || 0);
+      var taxPct = w.taxAuto ? suggestTaxPct(w.prod, w.ccy, days) : (w.tax || 0);
+      var gross = P * (1 + rate/100 * Tt);
+      var gain  = gross - P;
+      var net   = gross - gain * (taxPct/100);
+      // Vade sonu principalCcy'e çevir — end rate varsa kullan, yoksa spot
+      var r2 = fxRate(w.ccy, principalCcy, 'end');
+      if(r2 === null) r2 = fxRate(w.ccy, principalCcy, 'start');
+      if(r2 === null) continue;
+      total += net * r2;
+    }
+    return total;
+  }
+
+  var ccyMap = SMART_SCENARIOS[principalCcy] || SMART_SCENARIOS['USD'];
+  var keys = ['balanced','protection','growth','fxhedge','dpm'];
+  var results = {};
+  for(var ki=0; ki<keys.length; ki++){
+    var key = keys[ki];
+    try {
+      var s = ccyMap[key] && ccyMap[key](ctx);
+      results[key] = (s && s.weights) ? simScenario(s.weights) : -Infinity;
+    } catch(e) { results[key] = -Infinity; }
+  }
+
+  // En iyi bul
+  var best = 'balanced';
+  var bestVal = -Infinity;
+  for(var k in results){
+    if(results[k] > bestVal){ bestVal = results[k]; best = k; }
+  }
+
+  // Kurlar girilmemişse fallback: netCarry'e göre
+  var allZero = Object.values(results).every(function(v){ return v <= 0 || !isFinite(v); });
+  if(allZero){
+    var nc = ctx.netCarryTL_vsUSD;
+    if(principalCcy === 'USD'){
+      if(nc > 15) best = 'growth';
+      else if(nc > 5) best = 'balanced';
+      else if(nc > -5) best = 'fxhedge';
+      else best = 'protection';
+    } else if(principalCcy === 'TL'){
+      best = nc < -20 ? 'protection' : 'growth';
+    } else {
+      best = 'balanced';
+    }
+  }
+
+  openScenarioModal(best);
 }
 </script>
+
+</div><!-- /page-sim -->
+
+<!-- ══ PAGE: PORTFÖY TAKİP ══ -->
+
+<div id="page-pt" class="page">
+  <div id="site-header-pt" style="background:linear-gradient(135deg,#040d1a 0%,#0a1628 50%,#0f2040 100%);border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(4,13,26,.4);">
+    <div style="max-width:1400px;margin:0 auto;padding:0 20px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0 10px;gap:16px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:40px;height:40px;background:rgba(255,255,255,.06);border:1px solid rgba(232,184,58,.25);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg viewBox="0 0 36 36" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="4" y="8" width="28" height="20" rx="3" stroke="#e8b83a" stroke-width="2"/>
+              <path d="M4 14h28" stroke="#e8b83a" stroke-width="2"/>
+              <rect x="9" y="19" width="5" height="5" rx="1" fill="#e8b83a"/>
+              <rect x="17" y="19" width="5" height="5" rx="1" fill="rgba(232,184,58,.5)"/>
+            </svg>
+          </div>
+          <div>
+            <h1 style="color:#ffffff;font-size:15px;font-weight:700;">Portföy Takip</h1>
+            <div style="font-size:11.5px;color:#7fa8e0;margin-top:1px;">Müşteri bazlı gerçek zamanlı kar/zarar</div>
+          </div>
+        </div>
+        <button onclick="openAddClientModal()" class="btn btn-gold btn-sm" style="flex-shrink:0;">+ Müşteri Ekle</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap" id="pt-wrap">
+    <!-- RATES BAR -->
+    <div style="background:linear-gradient(135deg,#1a3260,#1e3d72);border-radius:var(--radius-xl);padding:14px 18px;margin-bottom:12px;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+      <div style="display:flex;gap:18px;flex-wrap:wrap;">
+        <div><div style="font-size:9px;font-weight:700;color:rgba(184,208,240,.5);letter-spacing:.8px;text-transform:uppercase;">USD/TRY</div><div style="font-size:16px;font-weight:700;color:#fff;" id="pt-rate-usd">—</div></div>
+        <div><div style="font-size:9px;font-weight:700;color:rgba(184,208,240,.5);letter-spacing:.8px;text-transform:uppercase;">EUR/TRY</div><div style="font-size:16px;font-weight:700;color:#fff;" id="pt-rate-eur">—</div></div>
+        <div><div style="font-size:9px;font-weight:700;color:rgba(184,208,240,.5);letter-spacing:.8px;text-transform:uppercase;">Altın/TRY</div><div style="font-size:16px;font-weight:700;color:#fff;" id="pt-rate-gold">—</div></div>
+      </div>
+      <button onclick="ptFetchLiveRates()" class="btn btn-gold btn-sm">🔄 Canlı Kurları Çek</button>
+    </div>
+
+```
+<!-- KPI HERO -->
+<div class="pt-hero" id="pt-hero">
+  <div class="pt-hero-title">📊 Genel Bakış</div>
+  <div class="pt-kpi-row" id="pt-kpis">
+    <div class="pt-kpi gold"><div class="k-label">Toplam AUM</div><div class="k-val" id="pt-aum">—</div><div class="k-sub">Giriş PB bazında</div></div>
+    <div class="pt-kpi" id="pt-kpi-pl"><div class="k-label">Toplam P/L</div><div class="k-val" id="pt-pl">—</div><div class="k-sub" id="pt-pl-sub">Bugün itibarıyla</div></div>
+    <div class="pt-kpi gold"><div class="k-label">Müşteri Sayısı</div><div class="k-val" id="pt-count">0</div><div class="k-sub">Aktif portföy</div></div>
+  </div>
+</div>
+
+<!-- CLIENT LIST -->
+<div id="pt-client-list"></div>
+
+<!-- ADD CLIENT BUTTON -->
+<button class="pt-add-btn" onclick="openAddClientModal()">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+  Müşteri Ekle
+</button>
+```
+
+  </div>
+</div><!-- /page-pt -->
+
+<!-- ══ BOTTOM NAV ══ -->
+
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="nav-item active" id="nav-sim" onclick="switchPage('sim')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+      <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+    </svg>
+    Simülatör
+  </button>
+  <button class="nav-item" id="nav-pt" onclick="switchPage('pt')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+      <rect x="3" y="4" width="18" height="16" rx="2"/>
+      <line x1="3" y1="10" x2="21" y2="10"/>
+      <line x1="8" y1="4" x2="8" y2="20"/>
+    </svg>
+    Portföy Takip
+  </button>
+</nav>
+
+<!-- ══ ADD CLIENT MODAL ══ -->
+
+<div class="pt-modal-overlay" id="pt-modal-overlay" onclick="handleModalOverlayClick(event)">
+  <div class="pt-modal" id="pt-modal">
+    <div class="pt-modal-title">
+      <span id="pt-modal-title-txt">Müşteri Ekle</span>
+      <button class="pt-modal-close" onclick="closeAddClientModal()">✕</button>
+    </div>
+
+```
+<input type="hidden" id="pt-edit-id" value="">
+
+<div class="pt-field">
+  <label>Müşteri Adı</label>
+  <input type="text" id="pt-name" placeholder="Ad Soyad / Kurum">
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+  <div class="pt-field">
+    <label>Giriş Tarihi</label>
+    <input type="date" id="pt-date">
+  </div>
+  <div class="pt-field">
+    <label>Giriş Para Birimi</label>
+    <select id="pt-ccy">
+      <option value="USD">USD</option>
+      <option value="TL">TL</option>
+      <option value="EUR">EUR</option>
+      <option value="XAUg">Altın (g)</option>
+    </select>
+  </div>
+  <div class="pt-field">
+    <label>Toplam Tutar</label>
+    <input type="number" id="pt-amount" placeholder="1.000.000">
+  </div>
+  <div class="pt-field">
+    <label>Giriş USD/TRY Kuru <button type="button" onclick="ptFetchRate()" style="margin-left:4px;font-size:9px;padding:2px 6px;background:rgba(232,184,58,.15);border:1px solid rgba(232,184,58,.3);border-radius:4px;cursor:pointer;color:var(--gold-600);font-weight:600;">Çek</button></label>
+    <input type="number" id="pt-usdtry" placeholder="44.31" step="0.01">
+  </div>
+</div>
+
+<div style="margin:14px 0 8px;display:flex;align-items:center;justify-content:space-between;">
+  <span style="font-size:11px;font-weight:700;color:var(--text-muted);letter-spacing:.8px;text-transform:uppercase;">Alokasyon</span>
+  <div style="display:flex;gap:6px;align-items:center;font-size:10px;color:var(--text-muted);">
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;">
+      <input type="radio" name="pt-alloc-mode" value="pct" id="pt-mode-pct" checked onchange="ptToggleAllocMode()"> Yüzde %
+    </label>
+    <label style="display:flex;align-items:center;gap:4px;cursor:pointer;">
+      <input type="radio" name="pt-alloc-mode" value="amt" id="pt-mode-amt" onchange="ptToggleAllocMode()"> Tutar
+    </label>
+  </div>
+</div>
+<div style="display:grid;grid-template-columns:100px 52px 80px 64px 52px 28px;gap:5px;margin-bottom:6px;align-items:center;">
+  <div style="font-size:10px;color:var(--text-muted);font-weight:600;">Ürün</div>
+  <div style="font-size:10px;color:var(--text-muted);font-weight:600;">PB</div>
+  <div style="font-size:10px;color:var(--text-muted);font-weight:600;" id="pt-alloc-hdr">Tutar(%)</div>
+  <div style="font-size:10px;color:var(--text-muted);font-weight:600;">Faiz%</div>
+  <div style="font-size:10px;color:var(--text-muted);font-weight:600;">Stpj%</div>
+  <div></div>
+</div>
+<div id="pt-alloc-rows"></div>
+<button class="pt-alloc-add" onclick="ptAddAllocRow()">+ Ürün Ekle</button>
+
+<div style="display:flex;gap:10px;margin-top:20px;">
+  <button class="btn btn-primary" style="flex:1;" onclick="saveClient()">💾 Kaydet</button>
+  <button class="btn btn-ghost" onclick="closeAddClientModal()">İptal</button>
+</div>
+```
+
+  </div>
+</div>
 
 </body></html>
